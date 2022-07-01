@@ -5,9 +5,38 @@ import styled from 'styled-components'
 import { useProductsContext } from '../context/products_context'
 import { useCartContext } from '../context/cart_context'
 import { useUserContext } from '../context/user_context'
-
+/**comfy-sloth-ecommerce app version 1 - CartButtons 
+ * Component - Features: 
+ * 
+ *      --> Building 'CartButtons' Component.
+ * 
+ *      --> Placing the cart-value -hard coded-
+ *          just to show it
+ * 
+ *      --> Placing the auth button in order 
+ *          to show it 
+ * 
+ * Notes: The next version will have the hidden and 
+ * show feature
+ * 
+*/
 const CartButtons = () => {
-  return <h4>cart buttons </h4>
+  return(
+    <Wrapper className='cart-btn-wrapper'>
+      <Link to='/cart' className='cart-btn'>
+        <span className='cart-container'>
+          Cart
+          <FaShoppingCart />
+          <span className='cart-value'>
+            12
+          </span>
+        </span>
+      </Link>
+      <button type='button' className='auth-btn'>
+        Login <FaUserPlus />
+      </button>
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.div`
