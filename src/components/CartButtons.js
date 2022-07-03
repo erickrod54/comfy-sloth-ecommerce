@@ -5,25 +5,32 @@ import styled from 'styled-components'
 import { useProductsContext } from '../context/products_context'
 import { useCartContext } from '../context/cart_context'
 import { useUserContext } from '../context/user_context'
-/**comfy-sloth-ecommerce app version 1 - CartButtons 
+
+/**comfy-sloth-ecommerce app version 2 - CartButtons 
  * Component - Features: 
  * 
- *      --> Building 'CartButtons' Component.
+ *      --> Destructuring 'closeSidebar' from 
+ *          'useProductsContext' context.
  * 
- *      --> Placing the cart-value -hard coded-
- *          just to show it
+ *      --> Triggering 'closeSidebar' on clicking 
+ *          '<FaShoppingCart />' link.
  * 
- *      --> Placing the auth button in order 
- *          to show it 
- * 
- * Notes: The next version will have the hidden and 
- * show feature
- * 
+ * Notes: As this Component contain the 'Cart' Link and the 
+ * 'Login' Link they have to "closeSidebar" and place navigation
+ * on their resective pages - Login will be modified in next 
+ * versions-
 */
 const CartButtons = () => {
+
+  const { closeSidebar } = useProductsContext()
+
+  console.log('I received the closeSidebar on CartButtons ==>', closeSidebar)
   return(
     <Wrapper className='cart-btn-wrapper'>
-      <Link to='/cart' className='cart-btn'>
+      {/**here i trigger 'closeSidebar'*/}
+      <Link to='/cart' 
+            className='cart-btn' 
+            onClick={closeSidebar}>
         <span className='cart-container'>
           Cart
           <FaShoppingCart />
