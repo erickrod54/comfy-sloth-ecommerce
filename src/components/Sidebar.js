@@ -8,8 +8,69 @@ import styled from 'styled-components'
 import CartButtons from './CartButtons'
 import { useUserContext } from '../context/user_context'
 
+/**comfy-sloth-ecommerce app version 1 - Sidebar Component
+ * - Features: 
+ * 
+ *      --> Building Sidebar Component.
+ * 
+ *      --> Styling '<SidebarContainer>' the 
+ *          'Sidebar' Component.
+ * 
+ *      --> Settting 'sidebar show-sidebar' and
+ *          'sidebar' style classes to toggle
+ *          the sidebar
+ * 
+ *       --> Placing the the 'logo'.
+ *  
+ *       --> Mapping the 'links' data
+ * 
+ *       --> Placing the 'chekout' link
+ *           manually
+ * 
+ * Notes: the 'checkout' link will be displayed 
+ * conditionally, in next version will be added the
+ * feature 
+*/
+
 const Sidebar = () => {
-  return <h4>sidebar</h4>
+  
+  const isOpen = false;
+
+  return(
+      <SidebarContainer>
+        <aside className={`${isOpen ? 
+          'sidebar show-sidebar' : 'sidebar'}`}>
+            <div className='sidebar-header'>
+              <img 
+                src={logo} 
+                className='logo' 
+                alt='comfy sloth'/>
+            <button className='close-btn' type='button'>
+              <FaTimes />
+            </button>
+            </div>
+            <ul className='links'>
+              {links.map((link) => {
+                const { id, text, url } = link;
+
+                return(
+                  <li key={id}>
+                    <Link to={url}>
+                      {text}
+                    </Link>
+                  </li>
+                )
+              })}
+               <li>
+                    <Link to='/checkout'>
+                    checkout
+                    </Link>
+                  </li>
+            </ul>
+            <CartButtons />
+        </aside>
+      </SidebarContainer>
+    )
 }
 
 const SidebarContainer = styled.div`
