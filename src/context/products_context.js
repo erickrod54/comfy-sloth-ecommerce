@@ -13,11 +13,23 @@ import {
   GET_SINGLE_PRODUCT_ERROR,
 } from '../actions'
 
+/**comfy-sloth-ecommerce app version 1 - products_context 
+ * file - Features: 
+ * 
+ *      --> Building State. -to dispatch actions-
+ * 
+ * Notes: this is going to be use to implement the sidebar
+ * confitional checkout
+*/
+
 const initialState = {}
 
 const ProductsContext = React.createContext()
 
 export const ProductsProvider = ({ children }) => {
+  const [ state, dispatch ] = useReducer(reducer, initialState)
+
+
   return (
     <ProductsContext.Provider value='products context'>
       {children}
