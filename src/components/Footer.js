@@ -1,7 +1,26 @@
 import React from 'react'
 import styled from 'styled-components'
+
+/**comfy-sloth-ecommerce app version 1 - Footer Component
+ * - Features: 
+ * 
+ *      --> Building Footer Component.
+ * 
+ * Notes: the links data is comming from
+ * 
+ *    '<h5>&copy; { new Date().getFullYear()}</h5>'
+ * 
+ * will give me the year, the rest are styles set on the 
+ * Wrapper Component
+*/
 const Footer = () => {
-  return <h4>footer</h4>
+  return(
+    <Wrapper>
+      <h5>&copy; { new Date().getFullYear()}</h5>
+      <span> ComfySloth</span>
+      <h5>All rights reserved</h5>
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.footer`
