@@ -13,25 +13,57 @@ import {
   GET_SINGLE_PRODUCT_ERROR,
 } from '../actions'
 
-/**comfy-sloth-ecommerce app version 1 - products_context 
+/**comfy-sloth-ecommerce app version 2 - products_context 
  * file - Features: 
  * 
- *      --> Building State. -to dispatch actions-
+ *      --> Building the initial state for 'isSidebarOpen'.
  * 
- * Notes: this is going to be use to implement the sidebar
- * confitional checkout
+ *      --> Building state to handle toggle 'Sidebar' 
+ *          action dispatch.
+ * 
+ *      --> Building 'openSidebar' in order to dispatch
+ *          the action to open the sidebar.
+ * 
+ *      --> Building 'closeSidebar' in order to dispatch
+ *          the action to close the sidebar. 
+ * 
+ *      --> Spreading state and functionalities throught
+ *          the provider.
+ * 
+ * Notes: for each functionality the 'type' defined is
+ * going to be accessed by the 'reducer' in order to 
+ * build the action dispatached here.
+ * 
+ * and the functionalities are going to be triggered by
+ * the components that need it ( Sidebar Component, and
+ * Navbar Component ) -these functionalies gives the
+ * sidebar behavior-
 */
 
-const initialState = {}
+const initialState = {
+  isSidebarOpen: true,
+}
 
 const ProductsContext = React.createContext()
 
 export const ProductsProvider = ({ children }) => {
   const [ state, dispatch ] = useReducer(reducer, initialState)
 
+  const openSidebar = () => {
+    dispatch({ type: SIDEBAR_OPEN})
+  }
+
+  const closeSidebar = () => {
+    dispatch({ type: SIDEBAR_CLOSE})
+  }
 
   return (
-    <ProductsContext.Provider value='products context'>
+    <ProductsContext.Provider 
+      value={{
+        ...state,
+        openSidebar,
+        closeSidebar
+      }}>
       {children}
     </ProductsContext.Provider>
   )
