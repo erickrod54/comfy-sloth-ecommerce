@@ -8,31 +8,33 @@ import CartButtons from './CartButtons'
 import { useProductsContext } from '../context/products_context'
 import { useUserContext } from '../context/user_context'
 
-/**comfy-sloth-ecommerce app version 1 - Navbar Component
+/**comfy-sloth-ecommerce app version 2 - Navbar Component
  * - Features: 
  * 
- *      --> Building Navbar Component.
+ *      --> Destructuring 'openSidebar' functionality from
+ *          'useProductsContext()'.
  * 
- *      --> Styling using the 'NavContainer' and
- *          'nav-center', 'nav-header', 'nav-toggle',
- *          and 'nav-links' classes.
- *  
- *      --> Mapping the rendering the links data.
+ *      --> Triggering  'openSidebar' functionality on 
+ *          clicking '<FaBars/>' link
  * 
- * Notes: the links data is comming from
- * 
- *    'import { links } from '../utils/constants'
+ * Notes: Placing the 'openSidebar' functionality here is 
+ * now the Sidebar able to toggle - the isSidebarOpen state
+ * value defined on the 'products_context' will toggle 
+ * between true and false depending on the user actions-
 */
 const Nav = () => {
+
+  const { openSidebar } = useProductsContext()
+
   return(
     <NavContainer>
         <div className='nav-center'>
           <div className='nav-header'>
-            <Link to='/'>
+            <Link to='/' >
               <img src={logo} alt='comfy sloth'/>
             </Link>
             <button type='button' className='nav-toggle'>
-              <FaBars />
+              <FaBars onClick={openSidebar}/>
             </button>
           </div>
           <ul className='nav-links'>
