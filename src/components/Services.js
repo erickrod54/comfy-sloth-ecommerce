@@ -2,8 +2,50 @@ import React from 'react'
 import styled from 'styled-components'
 import { services } from '../utils/constants'
 
+/**comfy-sloth-ecommerce app version 2 - 'Services'
+ * Component - Features: 
+ * 
+ *      --> Building 'Services' Component.
+ * 
+ *      --> Mapping and rendering services
+ *          data.
+ * 
+ * Notes: This a component that integrates with
+ * 'HomePage' page in order to display a meesage,
+ * and map the services data - data is in constants-
+*/
+
 const Services = () => {
-  return <h4>services </h4>
+  return(
+      <Wrapper>
+        <div className='section-center'>
+          <article className='header'>
+            <h3>
+              Custom furniture <br />
+              built only for you
+            </h3>
+            <p>
+            augue lacus viverra vitae congue eu consequat ac 
+            felis donec et odio pellentesque diam volutpat 
+            commodo sed egestas egestas fringilla
+            </p>
+          </article>
+          <div className='services-center'>
+            {services.map((service) => {
+              const { id, icon, title, text } = service;
+
+              return(
+                <article key={id} className='service'>
+                  <span className='icon'>{icon}</span>
+                  <h4>{title}</h4>
+                  <p>{text}</p>
+                </article>
+                )
+            })}
+          </div>
+        </div>
+      </Wrapper>
+    )
 }
 
 const Wrapper = styled.section`
