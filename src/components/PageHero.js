@@ -1,8 +1,27 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-const PageHero = () => {
-  return <h4>page hero</h4>
+
+/**comfy-sloth-ecommerce app version 2 - 'PageHero'
+ * Component - Features: 
+ * 
+ *      --> Building 'PageHero' Component
+ * 
+ * Notes: PageHero Component will receive a title prop
+ * and, PageHero Component is going to handle a an 
+ * alternative navigation across the pages
+ * 
+*/
+const PageHero = ({ title }) => {
+  return(
+    <Wrapper>
+      <div className='section-center'>
+        <h3>
+          <Link to='/'>Home</Link> / {title}
+        </h3>
+      </div>
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.section`
