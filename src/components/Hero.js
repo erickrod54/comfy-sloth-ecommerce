@@ -4,8 +4,38 @@ import { Link } from 'react-router-dom'
 import heroBcg from '../assets/hero-bcg.jpeg'
 import heroBcg2 from '../assets/hero-bcg-2.jpeg'
 
+/**comfy-sloth-ecommerce app version 2 - 'Hero'
+ * Component - Features: 
+ * 
+ *      --> Building 'Hero' Component.
+ * 
+ * Notes: This a component that integrates with
+ * 'HomePage' page in order to display a meesage,
+ * a couple images and a message
+*/
+
 const Hero = () => {
-  return <h4>hero</h4>
+  return(
+      <Wrapper className='section-center'>
+        <article className='content'>
+          <h1>design your <br />
+            comfort zone
+          </h1>
+          <p>
+          augue lacus viverra vitae congue eu consequat
+          ac felis donec et odio pellentesque diam volutpat 
+          commodo sed egestas egestas fringilla
+          </p>
+            <Link to='/products' className='btn hero-btn'>
+              shop now
+            </Link>
+        </article>
+            <article className='img-container'>
+              <img src={heroBcg} alt='nice table' className='main-img'/>
+              <img src={heroBcg2} alt='person working' className='accent-img'/>
+            </article>
+      </Wrapper>
+    )
 }
 
 const Wrapper = styled.section`
