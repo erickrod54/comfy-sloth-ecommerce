@@ -13,24 +13,36 @@ import {
   GET_SINGLE_PRODUCT_ERROR,
 } from '../actions'
 
-/**comfy-sloth-ecommerce app version 3 - products_context 
+/**comfy-sloth-ecommerce app version 4 - products_context 
  * file - Features: 
  * 
- *      --> Getting products data from the API.
+ *      --> Building the 'initialState' with new props
+ *          to handle the data request.
  * 
- *      --> Testing the the data is getting right
+ *      --> Dispatching the action to get the products
+ *          'GET_PRODUCTS_SUCCESS'.
  * 
- * Notes: In order to build 'FeaturesProducts' Component and
- * also the products specifics Component i use axios the get
- * the data and right away test it.
+ *      --> Dispatching the action to handle the error
+ *          'GET_PRODUCTS_ERROR'.           
  * 
- *i have two end points - url to get the data -, the first will
- * get me all the products and the second single product
- * this url's are already set on utils > constants
+ * Notes: These two actions are handled within the response
+ * in a 'try-cath' in block, so as i dispatch actions they 
+ * will be build in the 'products_reducer' file.
+ * 
+ * As i am dispatching 'GET_PRODUCTS_SUCCESS', this action
+ * will go with the payload 'products' that will be the data
+ * returned.
 */
 
+/**here i add 'products_loading','products_error',
+  *'products', 'featured_products' to handle the data
+  * request */
 const initialState = {
   isSidebarOpen: true,
+  products_loading: false,
+  products_error: false,
+  products: [],
+  featured_products:[],
 }
 
 const ProductsContext = React.createContext()
@@ -48,9 +60,22 @@ export const ProductsProvider = ({ children }) => {
 
   /**here i fetch using axios the products */
   const fetchProducts = async(url) => {
-    const response = await axios.get(url)
-    /**i log it to test it */
-    console.log(response)
+    dispatch({ type: GET_PRODUCTS_BEGIN })
+
+    /**here i set the try-catch. */
+    try {
+      const response = await axios.get(url)
+
+      /**i pull the data */
+      const products = response.data;
+      /**i dispatch the action to get the products */
+      dispatch({ type: GET_PRODUCTS_SUCCESS, payload: products })
+    } catch (error) {
+      /**just in case, i dispatch the action to handle the
+       * error*/
+      dispatch({ type: GET_PRODUCTS_ERROR })
+    }
+
   }
 
   /**here i invoque the fetch */
