@@ -28,7 +28,7 @@ const Sidebar = () => {
   
   const { closeSidebar, isSidebarOpen } = useProductsContext()
 
-  console.log('I received this from ProductsContext ==> ', isSidebarOpen)
+  //console.log('I received this from ProductsContext ==> ', isSidebarOpen)
 
   return(
       <SidebarContainer>

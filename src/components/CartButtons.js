@@ -24,7 +24,7 @@ const CartButtons = () => {
 
   const { closeSidebar } = useProductsContext()
 
-  console.log('I received the closeSidebar on CartButtons ==>', closeSidebar)
+  //console.log('I received the closeSidebar on CartButtons ==>', closeSidebar)
   return(
     <Wrapper className='cart-btn-wrapper'>
       {/**here i trigger 'closeSidebar'*/}
