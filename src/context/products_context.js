@@ -13,31 +13,20 @@ import {
   GET_SINGLE_PRODUCT_ERROR,
 } from '../actions'
 
-/**comfy-sloth-ecommerce app version 2 - products_context 
+/**comfy-sloth-ecommerce app version 3 - products_context 
  * file - Features: 
  * 
- *      --> Building the initial state for 'isSidebarOpen'.
+ *      --> Getting products data from the API.
  * 
- *      --> Building state to handle toggle 'Sidebar' 
- *          action dispatch.
+ *      --> Testing the the data is getting right
  * 
- *      --> Building 'openSidebar' in order to dispatch
- *          the action to open the sidebar.
+ * Notes: In order to build 'FeaturesProducts' Component and
+ * also the products specifics Component i use axios the get
+ * the data and right away test it.
  * 
- *      --> Building 'closeSidebar' in order to dispatch
- *          the action to close the sidebar. 
- * 
- *      --> Spreading state and functionalities throught
- *          the provider.
- * 
- * Notes: for each functionality the 'type' defined is
- * going to be accessed by the 'reducer' in order to 
- * build the action dispatached here.
- * 
- * and the functionalities are going to be triggered by
- * the components that need it ( Sidebar Component, and
- * Navbar Component ) -these functionalies gives the
- * sidebar behavior-
+ *i have two end points - url to get the data -, the first will
+ * get me all the products and the second single product
+ * this url's are already set on utils > constants
 */
 
 const initialState = {
@@ -56,6 +45,18 @@ export const ProductsProvider = ({ children }) => {
   const closeSidebar = () => {
     dispatch({ type: SIDEBAR_CLOSE})
   }
+
+  /**here i fetch using axios the products */
+  const fetchProducts = async(url) => {
+    const response = await axios.get(url)
+    /**i log it to test it */
+    console.log(response)
+  }
+
+  /**here i invoque the fetch */
+  useEffect(() => {
+    fetchProducts(url)
+  }, [])
 
   return (
     <ProductsContext.Provider 
