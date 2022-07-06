@@ -1,8 +1,51 @@
 import React from 'react'
 import styled from 'styled-components'
 
+/**comfy-sloth-ecommerce app version 2 - 'Contact'
+ * Component - Features: 
+ * 
+ *      --> Building 'Contact' Component.
+ * 
+ *      --> Building basic form to suscirbe newsletter.
+ * 
+ * Notes: This a component that integrates with
+ * 'HomePage' page in order to suscribe the newsletter,
+ * 
+ * This Component is styled using 'section-center', 'content',
+ * 'contact-form', submit-btn and 'form-input' 
+*/
+
 const Contact = () => {
-  return <h4>contact section</h4>
+  return(
+    <Wrapper>
+      <section className='section-center'>
+        <h3>Join our newsletter</h3>
+        <div className='content'>
+          <p>
+          nunc mattis enim ut tellus elementum sagittis
+          vitae et leo duis ut diam quam nulla porttitor massa 
+          id neque aliquam vestibulum morbi blandit cursus risus
+           at ultrices mi tempus imperdiet nulla malesuada 
+           pellentesque elit eget gravida cum sociis natoque 
+           penatibus
+          </p>
+          <form 
+            className='contact-form'
+            action='https://formspree.io/f/xknyljko'
+            method='POST'>
+            <input 
+              type='email' 
+              className='form-input' 
+              placeholder='enter email'
+              name='_replyto' />
+          <button type='submit' className='submit-btn'>
+            suscribe
+          </button>
+          </form>
+        </div>
+      </section>
+    </Wrapper>
+  )
 }
 const Wrapper = styled.section`
   padding: 5rem 0;
