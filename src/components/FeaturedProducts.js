@@ -6,8 +6,55 @@ import Error from './Error'
 import Loading from './Loading'
 import Product from './Product'
 
+/**comfy-sloth-ecommerce app version 4 - FeaturedProducts 
+ * Component - Features: 
+ * 
+ *      --> Building 'FeaturedProducts' Component.
+ * 
+ *      --> Destructuring 'products_loading', 
+ *         'products_error':error, 'featured_products'.
+ *          from 'useProductsContext()'
+ *       
+ *      --> Conditional rendering 'loading' and
+ *          'error' previously destructured.
+ * 
+ *      --> Mapping and slicing 'featured' array
+ *          to render 3 products.
+ *    
+ *      --> Styling the Component.            
+ * 
+ * Notes: the slice method applied before mapping 
+ * will render a 'slice' -part of the array- that 
+ * i inidicate the limit 
+*/
+
 const FeaturedProducts = () => {
-  return <h4>featured products</h4>
+
+  const { products_loading:loading, 
+          products_error:error, 
+          featured_products: featured } = useProductsContext()
+          
+          if (loading ) {
+            return <Loading />
+          }
+
+          if (error) {
+            return <Error />
+          }
+
+  return(
+    <Wrapper className='section'>
+      <div className='title'>
+        <h2>featured products</h2>
+        <div className='underline'/>
+      </div>
+      <div className='section-center featured'>
+        {featured.slice(0,3).map((product) => {
+          return <Product key={product.id} {...product}/>
+        })}
+      </div>
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.section`
