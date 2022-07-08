@@ -13,25 +13,16 @@ import {
   GET_SINGLE_PRODUCT_ERROR,
 } from '../actions'
 
-/**comfy-sloth-ecommerce app version 4 - products_context 
+/**comfy-sloth-ecommerce app version 5 - products_context 
  * file - Features: 
  * 
- *      --> Building the 'initialState' with new props
- *          to handle the data request.
+ *      --> Testing the 'Error' Component           
  * 
- *      --> Dispatching the action to get the products
- *          'GET_PRODUCTS_SUCCESS'.
+ * Notes: This Component has been placed on the 
+ * 'FeaturedProducts' Component and will show an error
+ * when we don't get the data right, to test it:
  * 
- *      --> Dispatching the action to handle the error
- *          'GET_PRODUCTS_ERROR'.           
- * 
- * Notes: These two actions are handled within the response
- * in a 'try-cath' in block, so as i dispatch actions they 
- * will be build in the 'products_reducer' file.
- * 
- * As i am dispatching 'GET_PRODUCTS_SUCCESS', this action
- * will go with the payload 'products' that will be the data
- * returned.
+ *      `${url}s` on the useEffect.
 */
 
 /**here i add 'products_loading','products_error',
@@ -80,6 +71,7 @@ export const ProductsProvider = ({ children }) => {
 
   /**here i invoque the fetch */
   useEffect(() => {
+    /**to test the error Component `${url}s` */
     fetchProducts(url)
   }, [])
 
