@@ -4,20 +4,19 @@ import { formatPrice } from '../utils/helpers'
 import { FaSearch } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
-/**comfy-sloth-ecommerce app version 4 - Product 
+/**comfy-sloth-ecommerce app version 5 - Product 
  * Component - Features: 
  * 
- *      --> Destrucuring 'image', 'name', 'price',
- *          and 'id'.             
+ *      --> Implementing 'formatPrice' to 
+ *          format the price in decimal
+ *          units              
  * 
- * Notes: I can destructure these 'image', 'name', 
- * 'price', and 'id' props because they're being 
- * mapped previuosly on 'FeaturedProducts' Component
- * so i have access to them.
- * 
- * I build the 'link' with the 'id' on the icon
- *  '<FaSearch />' and as 'footer' i place the
- * rest of the props to describe the product
+ * Notes: To payments processors -as Paypal, Stripe.
+ * and others- they will require the ammount of prices
+ * in cents -but the user will confuse wathcing big
+ * number in cents- so javaScript has a method to handle
+ * money formmating -Intl.NumberFormat-, this will be
+ * on 'utils/helpers' whenever i need it to use it.
 */
 
 const Product = ({ image, name, price, id }) => {
@@ -31,7 +30,7 @@ const Product = ({ image, name, price, id }) => {
       </div>
       <footer>
         <h5>{name}</h5>
-        <p>{price}</p>
+        <p>{ formatPrice(price) }</p>
       </footer>
     </Wrapper>
     )
