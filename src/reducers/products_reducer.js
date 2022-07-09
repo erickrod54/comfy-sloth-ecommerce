@@ -9,22 +9,20 @@ import {
   GET_SINGLE_PRODUCT_ERROR,
 } from '../actions'
 
-/**comfy-sloth-ecommerce app version 4 - products_reducer 
+/**comfy-sloth-ecommerce app version 6 - products_reducer 
  * file - Features: 
  * 
- *      --> Building 'GET_PRODUCTS_SUCCESS' action.
+ *      --> Building 'GET_SINGLE_PRODUCT_BEGIN,'
  * 
- *      --> Building 'GET_PRODUCTS_SUCCESS' action.
+ *      --> Building 'GET_SINGLE_PRODUCT_SUCCESS'
+ *   
+ *      --> Building 'GET_SINGLE_PRODUCT_ERROR'
  * 
- * Notes: for the 'action.type' 'GET_PRODUCTS_SUCCESS'
- * this is going to get me all the products, but
- * i'll filter by 'featured' prop on 'true'.
- * 
- * As i sue filter i'm creating a completely
- * new array - featured_products -
- * 
- * For c i just change the state 
- * of the props to display the error.
+ * Notes: These actions will handle the way i can
+ * obtain the 'singleProduct' data, so far to the
+ * previous versions i can visualize the single
+ * ptoduct by his id, this version as i said 
+ * handles the data
 */
 
 const products_reducer = (state, action) => {
@@ -61,6 +59,27 @@ if (action.type === GET_PRODUCTS_SUCCESS ) {
 if (action.type === GET_PRODUCTS_ERROR ) {
   return {...state, products_loading:false, 
     products_error: true}
+}
+
+/**Here i build the action 'GET_SINGLE_PRODUCT_BEGIN' 
+ * this action will handle the fetch request form the API*/
+if (action.type === GET_SINGLE_PRODUCT_BEGIN) {
+    return { ...state, single_product_loading: true, 
+            single_product_error: false}
+}
+
+/**Here i build the action  'GET_SINGLE_PRODUCT_SUCCESS'
+ * to handle when i already get the data form the API*/
+if (action.type === GET_SINGLE_PRODUCT_SUCCESS) {
+  return { ...state, single_product_loading:false, 
+          single_product: action.payload }
+}
+
+/**Here i build the action 'GET_SINGLE_PRODUCT_ERROR'
+ *the error action is a 'flip' of success prop values */
+if (action.type === GET_SINGLE_PRODUCT_ERROR ) {
+  return { ...state, single_product_loading: false, 
+          single_product_error: true}
 }
   
   throw new Error(`No Matching "${action.type}" - action type`)
