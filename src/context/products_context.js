@@ -13,16 +13,21 @@ import {
   GET_SINGLE_PRODUCT_ERROR,
 } from '../actions'
 
-/**comfy-sloth-ecommerce app version 5 - products_context 
+/**comfy-sloth-ecommerce app version 6 - products_context 
  * file - Features: 
  * 
- *      --> Testing the 'Error' Component           
+ *      --> Building state values for single_product
+ *          on 'initialState'.
  * 
- * Notes: This Component has been placed on the 
- * 'FeaturedProducts' Component and will show an error
- * when we don't get the data right, to test it:
+ *      --> Building 'fetchSingleProduct' to request
+ *          the single_product data to the API.
  * 
- *      `${url}s` on the useEffect.
+ *      --> Providing throght the provider
+ *          'fetchSingleProduct'                 
+ * 
+ * Notes: The 'fetchSingleProduct' dispatch action for begin
+ * the request, the success request, and the error just in case
+ * , these actions are defined on the reducer.
 */
 
 /**here i add 'products_loading','products_error',
@@ -30,10 +35,17 @@ import {
   * request */
 const initialState = {
   isSidebarOpen: true,
+
+  /**state values for products -featuredProducts-*/
   products_loading: false,
   products_error: false,
   products: [],
   featured_products:[],
+
+  /**state values for single product */
+  single_product_loading:false,
+  single_product_error:false,
+  single_product: {},
 }
 
 const ProductsContext = React.createContext()
@@ -69,6 +81,20 @@ export const ProductsProvider = ({ children }) => {
 
   }
 
+  const fetchSingleProduct = async(url) => {
+      dispatch({type: GET_SINGLE_PRODUCT_BEGIN});
+
+      try {
+        const response = await axios.get(url)
+        const singleProduct = response.data;
+        console.log('this is the data result of the fetch ==> ',singleProduct)
+        dispatch({ type: GET_SINGLE_PRODUCT_SUCCESS, 
+                  payload: singleProduct })
+      } catch (error) {
+         dispatch({type:GET_SINGLE_PRODUCT_ERROR}) 
+      }
+  }
+
   /**here i invoque the fetch */
   useEffect(() => {
     /**to test the error Component `${url}s` */
@@ -80,7 +106,8 @@ export const ProductsProvider = ({ children }) => {
       value={{
         ...state,
         openSidebar,
-        closeSidebar
+        closeSidebar,
+        fetchSingleProduct
       }}>
       {children}
     </ProductsContext.Provider>
