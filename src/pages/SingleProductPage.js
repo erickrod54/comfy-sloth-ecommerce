@@ -14,37 +14,28 @@ import {
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-/**comfy-sloth-ecommerce app version 6 - SingleProductPage 
+/**comfy-sloth-ecommerce app version 8 - SingleProductPage 
  * file - Features: 
  * 
- *      --> Destructuring props and functionality from
- *          the 'useProductsContext()'.
+ *      --> Building 'SingleProductPage' 
  * 
- *      --> Building the 'url' for the single product
- *          using 'fetchSingleProduct' functionality
+ *      --> Placing 'ProductImages' Component.
  * 
- *      --> Handling the 'loading' and the 'error'               
+ *      --> Placing 'Stars' Component.
+ *    
+ *      --> Placing 'AddToCart' Component.  
  * 
- * Notes: On this version i handle first the the url
- * building, error and loading components also set a 
- * timer for the error component, in order to redirect
- * to the home page just in case if the 'error' occurs
+ *      --> Destructuring props               
+ * 
+ * Notes: The Components placed here are going 
+ * to be use to build this page
 */
 
 const SingleProductPage = () => {
 
-  /**here i acces the 'id' */
-  console.log(useParams())
-
-  /**here i destructure the 'id' to use it,
-   * i pull it from the 'useParam'*/
   const { id } = useParams()
 
-  /**here i destructure the whole 'history'
-   * object in order to access to the 'push' 
-   * and build the timer */
   const history = useHistory()
-  console.log('this is the history ==>', history)
 
   /**here i destructure 'props' and 'fucntionality'
    * giving them nice friendly alliases*/
@@ -53,18 +44,14 @@ const SingleProductPage = () => {
          single_product: product,
          fetchSingleProduct } = useProductsContext()
 
-/**here i build the url, the url needs an unique 'id'
- * in order to display it correctly, so i set it as 
- * dependency array. */         
+ console.log('this is the data result of the fetch ==>', product)  
+
+/**here i build the url */         
   useEffect(() => {
     fetchSingleProduct(`${url}${id}`)
   },[id])
 
-  /**here i build the timer to redirects automaticly
-   * in 3s if an 'error' occurs, i use the history
-   * that i previous destructure to push the '/'
-   * route, i set as depency the 'error' will switch
-   * from 'false' to 'true' and triggers the redirect*/
+  /**here i build the timer */
   useEffect(() => {
     if (error) {
       setTimeout(() => {
@@ -81,9 +68,54 @@ const SingleProductPage = () => {
     return <Error />
   }
 
+  /**here i destructure the 'product' props */
+  const {name,
+         price,
+         description,
+         stock,
+         stars,
+         reviews,
+         id:sku,
+         company,
+         images } = product
+
   return(
     <Wrapper>
-      single product
+      <PageHero title={name} product/>
+      <div className='section section-center page'>
+        <Link to='/products' className='btn'>
+          back to products
+        </Link>
+        <div className='product-center'>
+          <ProductImages />
+          <section className='content'>
+            <h2>{name}</h2>
+            <Stars />
+            <h5 className='price'>{formatPrice(price)}</h5>
+            <p className='desc'>{description}</p>
+
+            {/**some of these comnditionals are checking 
+             * the stock in order to render values and
+             * a Component*/}
+            <p className='info'>
+              <span>Avaible : </span>
+              {stock > 0 ? 'In Stock' : 'Out od Stock'}
+            </p>
+
+            <p className='info'>
+              <span>SKU : </span>
+              {sku}
+            </p>
+
+            <p className='info'>
+              <span>Brand : </span>
+              {company}
+            </p>
+            <hr />
+            {stock > 0 && <AddToCart /> }
+          </section>
+        </div>
+      </div>
     </Wrapper>
   )
 }
