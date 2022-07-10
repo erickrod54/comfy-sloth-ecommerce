@@ -2,22 +2,33 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-/**comfy-sloth-ecommerce app version 2 - 'PageHero'
+/**comfy-sloth-ecommerce app version 7 - 'PageHero'
  * Component - Features: 
  * 
- *      --> Building 'PageHero' Component
+ *      --> Refactoring 'PageHero' in order to
+ *          render correctly the 'singleProduct'
  * 
- * Notes: PageHero Component will receive a title prop
- * and, PageHero Component is going to handle a an 
- * alternative navigation across the pages
+ * Notes: By checking the 'product' prop -this is the 
+ * single product-, i conditionally render a '/Producst'
+ * links right in between the products and the title
  * 
+ * As i set this prop here in order to work i have to 
+ * drill it to the component in the 'SingleProduct'
+ * component
 */
-const PageHero = ({ title }) => {
+
+/**here i destructure the 'product' prop*/
+const PageHero = ({ title, product }) => {
+
+  /**i render conditionally a 'products' link */
   return(
     <Wrapper>
       <div className='section-center'>
         <h3>
-          <Link to='/'>Home</Link> / {title}
+          <Link to='/'>Home</Link> / 
+          {product && <Link to='/products'>
+          Products /</Link>}
+          {title}
         </h3>
       </div>
     </Wrapper>
