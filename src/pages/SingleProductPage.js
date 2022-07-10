@@ -14,8 +14,78 @@ import {
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
+/**comfy-sloth-ecommerce app version 6 - SingleProductPage 
+ * file - Features: 
+ * 
+ *      --> Destructuring props and functionality from
+ *          the 'useProductsContext()'.
+ * 
+ *      --> Building the 'url' for the single product
+ *          using 'fetchSingleProduct' functionality
+ * 
+ *      --> Handling the 'loading' and the 'error'               
+ * 
+ * Notes: On this version i handle first the the url
+ * building, error and loading components also set a 
+ * timer for the error component, in order to redirect
+ * to the home page just in case if the 'error' occurs
+*/
+
 const SingleProductPage = () => {
-  return <h4>single product page</h4>
+
+  /**here i acces the 'id' */
+  console.log(useParams())
+
+  /**here i destructure the 'id' to use it,
+   * i pull it from the 'useParam'*/
+  const { id } = useParams()
+
+  /**here i destructure the whole 'history'
+   * object in order to access to the 'push' 
+   * and build the timer */
+  const history = useHistory()
+  console.log('this is the history ==>', history)
+
+  /**here i destructure 'props' and 'fucntionality'
+   * giving them nice friendly alliases*/
+  const { single_product_loading:loading,
+         single_product_error: error,
+         single_product: product,
+         fetchSingleProduct } = useProductsContext()
+
+/**here i build the url, the url needs an unique 'id'
+ * in order to display it correctly, so i set it as 
+ * dependency array. */         
+  useEffect(() => {
+    fetchSingleProduct(`${url}${id}`)
+  },[id])
+
+  /**here i build the timer to redirects automaticly
+   * in 3s if an 'error' occurs, i use the history
+   * that i previous destructure to push the '/'
+   * route, i set as depency the 'error' will switch
+   * from 'false' to 'true' and triggers the redirect*/
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        history.push('/')
+      }, 3000)
+    }
+  }, [error])
+
+  if (loading) {
+    return <Loading />
+  }
+
+  if (error) {
+    return <Error />
+  }
+
+  return(
+    <Wrapper>
+      single product
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.main`
