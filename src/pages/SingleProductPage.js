@@ -14,18 +14,14 @@ import {
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-/**comfy-sloth-ecommerce app version 8 - SingleProductPage 
+/**comfy-sloth-ecommerce app version 9 - SingleProductPage 
  * file - Features: 
  * 
- *      --> Building 'SingleProductPage' 
+ *      --> Drilling props 'images' throught the 
+ *         'ProductsImages' Component.
  * 
- *      --> Placing 'ProductImages' Component.
- * 
- *      --> Placing 'Stars' Component.
- *    
- *      --> Placing 'AddToCart' Component.  
- * 
- *      --> Destructuring props               
+ *      -->  Drilling 'stars' and 'reviews' props 
+ *          throught the 'Stars' Component.               
  * 
  * Notes: The Components placed here are going 
  * to be use to build this page
@@ -79,6 +75,7 @@ const SingleProductPage = () => {
          company,
          images } = product
 
+
   return(
     <Wrapper>
       <PageHero title={name} product/>
@@ -87,10 +84,12 @@ const SingleProductPage = () => {
           back to products
         </Link>
         <div className='product-center'>
-          <ProductImages />
+          {/**here i drilled the props*/}
+          <ProductImages images={images}/>
           <section className='content'>
             <h2>{name}</h2>
-            <Stars />
+            {/**here i drilled the props*/}
+            <Stars stars={stars} reviews={reviews}/>
             <h5 className='price'>{formatPrice(price)}</h5>
             <p className='desc'>{description}</p>
 
@@ -113,6 +112,7 @@ const SingleProductPage = () => {
             </p>
             <hr />
             {stock > 0 && <AddToCart /> }
+
           </section>
         </div>
       </div>
