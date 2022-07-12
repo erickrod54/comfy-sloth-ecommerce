@@ -14,14 +14,11 @@ import {
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-/**comfy-sloth-ecommerce app version 9 - SingleProductPage 
+/**comfy-sloth-ecommerce app version 10 - SingleProductPage 
  * file - Features: 
  * 
- *      --> Drilling props 'images' throught the 
- *         'ProductsImages' Component.
- * 
- *      -->  Drilling 'stars' and 'reviews' props 
- *          throught the 'Stars' Component.               
+ *      --> Drilling props 'product' throught the 
+ *         'AddToCart' Component.               
  * 
  * Notes: The Components placed here are going 
  * to be use to build this page
@@ -111,7 +108,7 @@ const SingleProductPage = () => {
               {company}
             </p>
             <hr />
-            {stock > 0 && <AddToCart /> }
+            {stock > 0 && <AddToCart product={product}/> }
 
           </section>
         </div>
