@@ -5,33 +5,23 @@ import { FaCheck } from 'react-icons/fa'
 import { useCartContext } from '../context/cart_context'
 import AmountButtons from './AmountButtons'
 
-/**comfy-sloth-ecommerce app version 10 - AddToCart 
+/**comfy-sloth-ecommerce app version 11 - AddToCart 
  * file - Features: 
  * 
- *      --> Destructuring 'product' and getting 
- *          his props. 
- *      
- *      --> Building state to handle the colors 
- *          value.
+ *      --> Placing the 'Amount' Component.
  * 
- *      --> Mapping the 'colors' array an setting 
- *          up in a 'button' 
+ *      --> Building a state to handle the amount
+ *          to 'increase' and 'decrease' a product.
+ *    
+ *      --> Building the 'increase' and 'decrease' 
+ *         feature
  * 
- *      --> Setting an active class to indicate that 
- *          a color have been selected by an user.                   
+ *      --> Drilling the 'increase' and 'decrease' 
+ *         features as props to the 'Amount' 
+ *         Component.                     
  * 
- * Notes: This version is the basic setup of the 
- * 'AddToCart', part of the full functionallity is
- * going to be provided by the 'cart_context' -this
- * way the cart features can be use where i need it
- * on my application-
- * 
- * The 'active' class has the 'opacity' different to the
- * 'color-btn' so can be easily identified as selected
- * also the '<FaCheck' icon
- * 
- * in the next version i'll incorporate the increase and 
- * decrease feature for the 'product' added to the cart
+ * Notes: Implementing the 'increase' and 'decrease' 
+ * feature for the 'product' added to the cart
 */
 
 const AddToCart = ({ product }) => {
@@ -42,6 +32,28 @@ const AddToCart = ({ product }) => {
   /**here i build the color state to handle the 'colors' 
    * value */
   const [ mainColor , setMainColor ] = useState(colors[0]);
+
+  const [ amount, setAmount ] = useState(1);
+
+  const increase = () => {
+    setAmount((oldAmount) => {
+      let tempAmount = oldAmount + 1
+      if (tempAmount > stock ) {
+        tempAmount = stock;
+      }
+      return tempAmount;
+    })
+  }
+
+  const decrease = () => {
+    setAmount((oldAmount) => {
+      let tempAmount = oldAmount - 1
+      if (tempAmount < 1 ) {
+        tempAmount = 1;
+      }
+      return tempAmount;
+    })
+  }
 
   return(
       <Wrapper>
@@ -58,6 +70,15 @@ const AddToCart = ({ product }) => {
                 >{ mainColor === color ? <FaCheck /> : null }</button>
             })
             }</div>
+        </div>
+        <div className='btn-container'>
+          <AmountButtons 
+              amount={amount} 
+              increase={increase} 
+              decrease={decrease}/>
+          <Link to='/cart' className='btn'>
+            add to cart
+          </Link>
         </div>
       </Wrapper>
     )
