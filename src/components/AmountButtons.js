@@ -2,8 +2,39 @@ import React from 'react'
 import styled from 'styled-components'
 import { FaPlus, FaMinus } from 'react-icons/fa'
 
-const AmountButtons = () => {
-  return <h4>amount buttons </h4>
+/**comfy-sloth-ecommerce app version 11 - Amount
+ * Component - Features: 
+ * 
+ *      --> Destructuring 'increase' and 'decrease'
+ *          functionalities also the 'amount' value.
+ * 
+ *      --> Building the 'AmountButtons' Component.                                 
+ * 
+ * Notes: The 'increase' and 'decrease' functionalies for
+ * the first one is going to have the top as the 'stock'
+ * of the product, and the decrease the bottom will be 
+ * '1' because a product with '0' - 'stock' cannot be 
+ * render.
+*/
+
+const AmountButtons = ({ amount, increase, decrease }) => {
+  return(
+    <Wrapper className='amount-btns'>
+      <button 
+        type='button' 
+        className='amount-btn' 
+        onClick={decrease}>
+          <FaMinus />
+      </button>
+        <h2 className='amount'>{amount}</h2>
+      <button 
+        type='button' 
+        className='amount-btn' 
+        onClick={increase}>
+          <FaPlus />
+      </button>
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.div`
