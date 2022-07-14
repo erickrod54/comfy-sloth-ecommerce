@@ -8,20 +8,27 @@ import { CartProvider } from './context/cart_context'
 import { UserProvider } from './context/user_context'
 import { Auth0Provider } from '@auth0/auth0-react'
 
-/**comfy-sloth-ecommerce app version 1 - index js file
+/**comfy-sloth-ecommerce app version 11 - index js file
  * - Features: 
  * 
- *      --> Wrapping 'App' using 'ProductsProvider'
+ *      --> Wrapping 'App' using 'FilterProvider'
  *          in order to provide products data and 
- *          features.
+ *          features from 'ProductsProvider' to
+ *          'FilterProvider'.
  * 
- * Notes: this is going to be use to implement the sidebar
- * confitional checkout
+ * Notes: the 'ProductsProvider' provides > FilterProvider and 
+ * both provides all the '<App />'
+ * 
+ * There is an action 'LOAD_PRODUCTS' specially made with the 
+ * propouse to provide the 'products' from 'ProductsProvider' 
+ * to 'FilterProvider'
 */
 
 ReactDOM.render(
 <ProductsProvider>
-    <App />
+    <FilterProvider>
+        <App />
+    </FilterProvider>
 </ProductsProvider>, 
 
 document.getElementById('root')
