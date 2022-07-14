@@ -31,8 +31,8 @@ const ProductImages = ({ images = [{url:''}] }) => {
    * for it- */
   const [ main, setMain ] = useState(images[0])
 
-  console.log('images received at ProductImages ==> ', images)
-  console.log('this is the alt name for the images, the filename prop ==>', main)
+  //console.log('images received at ProductImages ==> ', images)
+  //console.log('this is the alt name for the images, the filename prop ==>', main)
   return(
     <Wrapper>
       {/**here is the full galery */}

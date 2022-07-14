@@ -21,8 +21,8 @@ import { BsStarFill, BsStarHalf, BsStar } from 'react-icons/bs'
 
 const Stars = ({ stars, reviews }) => {
 
-  console.log('this is the stars value ==> ', stars ,
-  'and this is the reviews value ==>', reviews)
+  //console.log('this is the stars value ==> ', stars ,
+  //'and this is the reviews value ==>', reviews)
 
   /**i called 'tempStars' because i already use stars*/
 
@@ -45,7 +45,7 @@ const Stars = ({ stars, reviews }) => {
         </span>
     )
   })
-  console.log('the tempStars ==>', tempStars)
+  //console.log('the tempStars ==>', tempStars)
 
   return(
     <Wrapper>

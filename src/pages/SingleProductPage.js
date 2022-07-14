@@ -37,7 +37,7 @@ const SingleProductPage = () => {
          single_product: product,
          fetchSingleProduct } = useProductsContext()
 
- console.log('this is the data result of the fetch ==>', product)  
+ //console.log('this is the data result of the fetch ==>', product)  
 
 /**here i build the url */         
   useEffect(() => {
