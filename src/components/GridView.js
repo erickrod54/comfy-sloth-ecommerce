@@ -2,8 +2,29 @@ import React from 'react'
 import styled from 'styled-components'
 import Product from './Product'
 
-const GridView = () => {
-  return <h4>Grid View</h4>
+/**comfy-sloth-ecommerce app version 12 - GridView
+ * file - Features: 
+ * 
+ *      --> Destructuring the 'products' that were
+ *          drilled from 'ProductsList'.
+ * 
+ *      --> Mapping the 'products' on the 'Product'
+ *          Component.                                  
+ * 
+ * Notes: this is the component that will render a 
+ * 'GridView'
+*/
+
+const GridView = ({ products }) => {
+  return(
+      <Wrapper>
+        <div className='products-container'>
+          {products.map((product) => {
+            return <Product key={product.id} {...product}/>
+          })}
+        </div>
+      </Wrapper>
+    )
 }
 
 const Wrapper = styled.section`
