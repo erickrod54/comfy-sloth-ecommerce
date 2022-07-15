@@ -12,37 +12,14 @@ import {
 } from '../actions'
 import { useProductsContext } from './products_context'
 
-/**comfy-sloth-ecommerce app version 11 - filter_context
+/**comfy-sloth-ecommerce app version 12 - filter_context
  * file - Features: 
  * 
- *      --> Building the initial state with 
- *          two value props 'filtered_products',
- *          'all_products'.
+ *      --> Providing the 'state' value throght the 
+ *          Provider.                                  
  * 
- *      --> Destructuring the 'products' data
- *          from the 'useProductsContext'.
- * 
- *      --> Building the state for the
- *          Reducer -this version focus
- *          on the dispatch 
- *          (the action)-                                  
- * 
- * Notes: Is very impportant to check three things
- * 
- *  first --> to check the log of the products
- *            destructured -must be an array-
- * 
- *  second --> this 'filter_context' must be
- *             wrapped by the context that it
- *              need the values - products-
- *              is the 'ProductsProvider'.
- * 
- *  Third --> on the reducer by building the 
- *            action that has the payload
- *            - products - LOAD_PRODUCTS
- *            that the array is filling 
- *            with a copy of the payload
- *            - spread the action.payload-
+ * Notes: for this version the state in going to be use to
+ * build a starter for 'ProductList'
 */
 
 /**by the initial state will be empty
@@ -77,7 +54,7 @@ export const FilterProvider = ({ children }) => {
   }, [products])
 
   return (
-    <FilterContext.Provider value='filter context'>
+    <FilterContext.Provider value={{...state}}>
       {children}
     </FilterContext.Provider>
   )
