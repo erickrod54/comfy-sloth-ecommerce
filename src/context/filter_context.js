@@ -12,14 +12,15 @@ import {
 } from '../actions'
 import { useProductsContext } from './products_context'
 
-/**comfy-sloth-ecommerce app version 12 - filter_context
+/**comfy-sloth-ecommerce app version 13 - filter_context
  * file - Features: 
  * 
- *      --> Providing the 'state' value throght the 
- *          Provider.                                  
+ *      --> Adding 'grid_view' to initialState.                                 
  * 
- * Notes: for this version the state in going to be use to
- * build a starter for 'ProductList'
+ * Notes:This value is going to be use on the 'ProductList'
+ * to change the products view from 'grid' to a 'list'.
+ * 
+ * As i am spreading the state the prop added will be provided.
 */
 
 /**by the initial state will be empty
@@ -27,7 +28,8 @@ import { useProductsContext } from './products_context'
  * the context 'products' data*/
 const initialState = {
   filtered_products: [],
-  all_products: []
+  all_products: [],
+  grid_view:true
 }
 
 const FilterContext = React.createContext()
