@@ -2,8 +2,60 @@ import React from 'react'
 import { useFilterContext } from '../context/filter_context'
 import { BsFillGridFill, BsList } from 'react-icons/bs'
 import styled from 'styled-components'
+
+/**comfy-sloth-ecommerce app version 13 - Sort
+ * Component - Features: 
+ * 
+ *      --> Destructuring 'filtered_products' as 
+ *          'products' and 'grid_view' from 
+ *          'useFilterContext()'
+ * 
+ *      --> Imorting and Placing 'BsFillGridFill'
+ *          and 'BsList' giving them an active
+ *          class depending on 'grid_view' value.
+ * 
+ *      --> Building a basic selection form with
+ *          options to use later to filter the
+ *          'products' data
+ * 
+ * Notes: This version 13 for all the files is a
+ * basic setup of the UI, and remember for selection
+ * forms is very important the 'name' att, because 
+ * this will be targeted later to filter the 'projects'
+ * data
+*/
+
 const Sort = () => {
-  return <h4>sort </h4>
+  const { filtered_products: products, 
+          grid_view } = useFilterContext()
+
+  return(
+    <Wrapper>
+      <div className='btn-container'>
+        <button 
+          type='button' 
+          className={`${grid_view ? 'active' : null }`}>
+          <BsFillGridFill />
+        </button>
+        <button 
+          type='button' 
+          className={`${!grid_view ? 'active' : null }`}>
+          <BsList />
+        </button>
+      </div>
+      <p>{products.length} products found</p>
+      <hr />
+      <form>
+        <label htmlFor='sort'>sort by</label>
+        <select name='sort' id='sort' className='sort-input'>
+          <option value='price-lowest'>price (lowest) </option>
+          <option value='price-highest'>price (highest)</option>
+          <option value='name-a'>name (a - z)</option>
+          <option value='name-z'>name (z - a)</option>
+        </select>
+      </form>
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.section`
