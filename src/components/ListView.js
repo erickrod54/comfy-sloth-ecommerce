@@ -2,8 +2,45 @@ import React from 'react'
 import styled from 'styled-components'
 import { formatPrice } from '../utils/helpers'
 import { Link } from 'react-router-dom'
-const ListView = () => {
-  return <h4>list view</h4>
+
+/**comfy-sloth-ecommerce app version 13 - ListView
+ * Component - Features: 
+ * 
+ *      --> Destructuring the 'products'
+ *          - comes from 'ProductList'-
+ * 
+ *      --> Adding list Styles using 'Wrrapper',
+ *          'price', and 'btn'
+ * 
+ *      --> Mapping 'products', destructuring 
+ *          props and rendering them.
+ * 
+ * Notes: This is a list view for the 'products'
+ * data 
+*/
+
+const ListView = ({ products }) => {
+
+  return(
+    <Wrapper>
+      {products.map((product) => {
+        const { id, image, name, price, description } = product;
+        return(
+          <article key={id}>
+            <img src={image} alt={name} />
+            <div>
+              <h4>{name}</h4>
+              <h5 className='price'>{formatPrice(price)}</h5>
+              <p>{description.substring(0,150)}...</p>
+              <Link to={`/products/${id}`} className='btn'>
+                Details
+              </Link>
+            </div>
+          </article>
+        )
+      })}
+    </Wrapper>
+    )
 }
 
 const Wrapper = styled.section`
