@@ -12,15 +12,20 @@ import {
 } from '../actions'
 import { useProductsContext } from './products_context'
 
-/**comfy-sloth-ecommerce app version 13 - filter_context
+/**comfy-sloth-ecommerce app version 14 - filter_context
  * file - Features: 
  * 
- *      --> Adding 'grid_view' to initialState.                                 
+ *      --> Dispatching 'setGridView' action
+ *          and proving it throught the 
+ *          provider.
+ *    
+ *      --> Dispatching 'setListView' action
+ *          and proving it throught the 
+ *          provider.                                  
  * 
- * Notes:This value is going to be use on the 'ProductList'
- * to change the products view from 'grid' to a 'list'.
- * 
- * As i am spreading the state the prop added will be provided.
+ * Notes: These actions are being dispatching here
+ * and then are gonna be build on the filter_reducer
+ * and use by the 'Sort' Component.
 */
 
 /**by the initial state will be empty
@@ -55,8 +60,20 @@ export const FilterProvider = ({ children }) => {
     dispatch({ type: LOAD_PRODUCTS, payload: products})
   }, [products])
 
+  const setGridView = () => {
+    dispatch({ type: SET_GRIDVIEW })
+  } 
+
+  const setListView = () => {
+    dispatch({ type: SET_LISTVIEW })
+  }
+
   return (
-    <FilterContext.Provider value={{...state}}>
+    <FilterContext.Provider value={{
+      ...state,
+      setGridView,
+      setListView
+    }}>
       {children}
     </FilterContext.Provider>
   )
