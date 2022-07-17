@@ -3,43 +3,43 @@ import { useFilterContext } from '../context/filter_context'
 import { BsFillGridFill, BsList } from 'react-icons/bs'
 import styled from 'styled-components'
 
-/**comfy-sloth-ecommerce app version 13 - Sort
+/**comfy-sloth-ecommerce app version 14 - Sort
  * Component - Features: 
  * 
- *      --> Destructuring 'filtered_products' as 
- *          'products' and 'grid_view' from 
- *          'useFilterContext()'
+ *      --> Destructuring 'setGridView' and 
+ *         'setListView' features from 
+ *         'useFilterContext()'.
  * 
- *      --> Imorting and Placing 'BsFillGridFill'
- *          and 'BsList' giving them an active
- *          class depending on 'grid_view' value.
+ *      --> Setting 'setGridView' action for
+ *          'BsFillGridFill' icon.
  * 
- *      --> Building a basic selection form with
- *          options to use later to filter the
- *          'products' data
+ *      --> Setting 'setListView' action for
+ *          'BsList' icon.
  * 
- * Notes: This version 13 for all the files is a
- * basic setup of the UI, and remember for selection
- * forms is very important the 'name' att, because 
- * this will be targeted later to filter the 'projects'
- * data
+ * Notes: these 'setGridView' and 'setListView' actions 
+ * are going to be use by linking it with the icons
+ *  here in the 'Sort' Component.
 */
 
 const Sort = () => {
   const { filtered_products: products, 
-          grid_view } = useFilterContext()
+          grid_view,
+         setGridView,
+         setListView } = useFilterContext()
 
   return(
     <Wrapper>
       <div className='btn-container'>
         <button 
           type='button' 
-          className={`${grid_view ? 'active' : null }`}>
+          className={`${grid_view ? 'active' : null }`}
+          onClick={setGridView}>
           <BsFillGridFill />
         </button>
         <button 
           type='button' 
-          className={`${!grid_view ? 'active' : null }`}>
+          className={`${!grid_view ? 'active' : null }`}
+          onClick={setListView}>
           <BsList />
         </button>
       </div>
