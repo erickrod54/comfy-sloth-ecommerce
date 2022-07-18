@@ -12,22 +12,16 @@ import {
 } from '../actions'
 import { useProductsContext } from './products_context'
 
-/**comfy-sloth-ecommerce app version 15 - filter_context
+/**comfy-sloth-ecommerce app version 16 - filter_context
  * file - Features: 
  * 
- *      --> Building the 'updateSort' feature.
+ *      --> Implementing 'useEffect' to dispatch 'UPDATE_SORT' 
+ *          action                                    
  * 
- *      --> Providing the 'updateSort' feature
- *          throught the provider.
- * 
- *      --> Dispatching the 'UPDATE_SORT' action.                                  
- * 
- * Notes: with the 'sort' state value i'll make a 
- * controlled input to target what 'name' the user
- * is selecting from the 'Sort' > 'select form'. 
- * 
- * i trigger the dispatch withing the 'updateSort'
- * feature to send the value as payload
+ * Notes: The 'useEffect' implementation to dispatch 
+ * 'UPDATE_SORT' is made in order to use as dependencies
+ * the products, and the state.sort prop -useEffect triggers
+ * when the 'products' get mount and state.sort prop is avaible-
 */
 
 /*here is the 'initialState' */
@@ -57,6 +51,12 @@ export const FilterProvider = ({ children }) => {
     dispatch({ type: LOAD_PRODUCTS, payload: products})
   }, [products])
 
+  /**here i trigger the useEffect to dispatch the action
+   * when 'products' get mount */
+  useEffect(() => {
+    dispatch({ type: SORT_PRODUCTS })
+  }, [products, state.sort])
+
   const setGridView = () => {
     dispatch({ type: SET_GRIDVIEW })
   } 
@@ -77,7 +77,7 @@ export const FilterProvider = ({ children }) => {
     /**here i dispatch the action */
     dispatch({ type: UPDATE_SORT, payload: value})
 
-    console.log('the value selected ==>', value)
+    //console.log('the value selected ==>', value)
   }
 
   return (
