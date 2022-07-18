@@ -9,17 +9,13 @@ import {
   CLEAR_FILTERS,
 } from '../actions'
 
-/**comfy-sloth-ecommerce app version 14 - filter_reducer
+/**comfy-sloth-ecommerce app version 15 - filter_reducer
  * file - Features: 
  * 
- *      --> Building the action 'SET_GRIDVIEW'.
+ *      --> Building the action 'UPDATE_SORT'.                                 
  * 
- *      --> Building the action 'SET_LISTVIEW'.                                 
- * 
- * Notes: These actions must be build sequentially
- * as the 'grid' triggers first - the icons order
- * in Sort Component - it goes first and so on 
- * with 'SET_LISTVIEW' action.
+ * Notes: This action will keep the value selected
+ * by the user as the payload.
 */
 
 const filter_reducer = (state, action) => {
@@ -43,6 +39,12 @@ const filter_reducer = (state, action) => {
     return {...state, grid_view:false } 
   }
 
+  /**here i build the 'UPDATE_SORT' action*/
+  if ( action.type === UPDATE_SORT ) {
+    /**i spread/copy the state and asign the 'sort' prop
+     * value dynamicly to the payload -value selected-*/
+    return {...state, sort: action.payload }    
+  }
   
   throw new Error(`No Matching "${action.type}" - action type`)
 }
