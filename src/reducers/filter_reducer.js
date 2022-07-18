@@ -9,13 +9,15 @@ import {
   CLEAR_FILTERS,
 } from '../actions'
 
-/**comfy-sloth-ecommerce app version 15 - filter_reducer
+/**comfy-sloth-ecommerce app version 16 - filter_reducer
  * file - Features: 
  * 
- *      --> Building the action 'UPDATE_SORT'.                                 
+ *      --> Building 'SORT_PRODUCTS' action in order
+ *          to trigger each action from the 'selection 
+ *          form' - programaticlly approach -                                
  * 
- * Notes: This action will keep the value selected
- * by the user as the payload.
+ * Notes: this programaticlly approach use ES6 methods as 'sort',
+ * and 'localeCompare'
 */
 
 const filter_reducer = (state, action) => {
@@ -44,6 +46,33 @@ const filter_reducer = (state, action) => {
     /**i spread/copy the state and asign the 'sort' prop
      * value dynamicly to the payload -value selected-*/
     return {...state, sort: action.payload }    
+  }
+
+  if (action.type === SORT_PRODUCTS ) {
+    /** 'a' is previous element, and 'b' next element
+     * applying 'sort' method */
+    const { sort, filtered_products } = state;
+    let tempProducts = [...filtered_products];
+
+    if (sort === 'price-lowest') {
+      tempProducts = tempProducts.sort((a,b) => a.price - b.price)
+    }
+    if (sort === 'price-highest') {
+      tempProducts = tempProducts.sort((a,b) => b.price - a.price)
+    }
+    /** 'a' is previous element, and 'b' next element
+     * applying 'localeCompare' method */
+    if (sort === 'name-a') {
+      tempProducts = tempProducts.sort((a,b) => {
+        return a.name.localeCompare(b.name)
+      })
+    }
+    if (sort === 'name-z') {
+      tempProducts = tempProducts.sort((a,b) => {
+        return b.name.localeCompare(a.name)
+      })
+    }
+    return {...state, filtered_products: tempProducts}
   }
   
   throw new Error(`No Matching "${action.type}" - action type`)
