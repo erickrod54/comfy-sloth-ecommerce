@@ -3,29 +3,33 @@ import { useFilterContext } from '../context/filter_context'
 import { BsFillGridFill, BsList } from 'react-icons/bs'
 import styled from 'styled-components'
 
-/**comfy-sloth-ecommerce app version 14 - Sort
+/**comfy-sloth-ecommerce app version 15 - Sort
  * Component - Features: 
  * 
- *      --> Destructuring 'setGridView' and 
- *         'setListView' features from 
- *         'useFilterContext()'.
+ *      --> Destructuring 'sort' state value, and 
+ *         'updateSort' feature.
  * 
- *      --> Setting 'setGridView' action for
- *          'BsFillGridFill' icon.
+ *      --> Setting 'sort' as value of the select 
+ *          form.
  * 
- *      --> Setting 'setListView' action for
- *          'BsList' icon.
+ *      --> Setting 'updateSort' as 'onChange' attribute
+ *          for the select form.
  * 
- * Notes: these 'setGridView' and 'setListView' actions 
- * are going to be use by linking it with the icons
- *  here in the 'Sort' Component.
+ * Notes: the 'sort' state value, and 'updateSort' feature
+ * are going to be use to build a controlled input to get
+ * the value of what the user selects on the select form.
+ * 
+ * 'updateSort' as 'onChange' will trigger the action 
+ * dispatched on the context and build on the reducer.
 */
 
 const Sort = () => {
   const { filtered_products: products, 
           grid_view,
          setGridView,
-         setListView } = useFilterContext()
+         setListView,
+         sort,
+         updateSort } = useFilterContext()
 
   return(
     <Wrapper>
@@ -47,7 +51,14 @@ const Sort = () => {
       <hr />
       <form>
         <label htmlFor='sort'>sort by</label>
-        <select name='sort' id='sort' className='sort-input'>
+        <select 
+          name='sort' 
+          id='sort' 
+          className='sort-input'
+          value={sort}
+          onChange={updateSort}
+          >
+
           <option value='price-lowest'>price (lowest) </option>
           <option value='price-highest'>price (highest)</option>
           <option value='name-a'>name (a - z)</option>
