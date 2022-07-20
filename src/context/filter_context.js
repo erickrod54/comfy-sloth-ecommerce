@@ -12,15 +12,26 @@ import {
 } from '../actions'
 import { useProductsContext } from './products_context'
 
-/**comfy-sloth-ecommerce app version 17 - filter_context
+/**comfy-sloth-ecommerce app version 18 - filter_context
  * file - Features: 
  * 
- *      --> Setting up 'filter' state values.                                    
+ *      --> Building 'updateFilters'.
  * 
- * Notes: This version will handle the set up of filter
- * values in the intialState, it will be one level deep
- * on the state, and it will be values to asign it as 
- * .
+ *      --> Dispatching 'FILTER_PRODUCTS' action.
+ * 
+ *      --> Adding 'state.filters' as a dependency
+ *          array for the useEffect before sort 
+ *          action.                                    
+ * 
+ * Notes: 'updateFilters' will be an event features that
+ * will trigger once detects change on any field of the
+ * 'Filter' Component by the user actions and a cleanup
+ * function 'clearFilters' to go back to the default
+ * settings. 
+ * 
+ * for this version is going to get done filters > 'text'
+ * prop that is a search field based on what the user type
+ * in.
 */
 
 /*here is the 'initialState' */
@@ -65,8 +76,9 @@ export const FilterProvider = ({ children }) => {
   /**here i trigger the useEffect to dispatch the action
    * when 'products' get mount */
   useEffect(() => {
+    dispatch({ type: FILTER_PRODUCTS })
     dispatch({ type: SORT_PRODUCTS })
-  }, [products, state.sort])
+  }, [products, state.sort, state.filters])
 
   const setGridView = () => {
     dispatch({ type: SET_GRIDVIEW })
@@ -91,12 +103,27 @@ export const FilterProvider = ({ children }) => {
     //console.log('the value selected ==>', value)
   }
 
+  const updateFilters = (e) => {
+      let name = e.target.name
+      let value = e.target.value
+
+      //here i test it
+      //console.log('this is the name i get ==>', name, '=> and this is the value the user type ==>', value)
+      dispatch({ type: UPDATE_FILTERS, payload:{ name, value }})
+  }
+
+  const clearFilters = () => {
+
+  }
+
   return (
     <FilterContext.Provider value={{
       ...state,
       setGridView,
       setListView,
-      updateSort
+      updateSort,
+      updateFilters,
+      clearFilters
     }}>
       {children}
     </FilterContext.Provider>
