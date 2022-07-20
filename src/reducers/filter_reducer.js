@@ -9,19 +9,18 @@ import {
   CLEAR_FILTERS,
 } from '../actions'
 
-/**comfy-sloth-ecommerce app version 17 - filter_reducer
+/**comfy-sloth-ecommerce app version 18 - filter_reducer
  * file - Features: 
  * 
- *      --> Building 'SORT_PRODUCTS' action in order
- *          to trigger each action from the 'selection 
- *          form' - long way -
+ *      --> Building 'UPDATE_FILTERS'.
  * 
- *      --> Mapping the 'action.payload' - 'products' - 
- *          once load to set values to the 'filter'                                
+ *      --> Building 'FILTER_PRODUCTS'.                                
  * 
- * Notes: this long way approach is using ES6 methods as 
- * 'sort', and 'localeCompare', and to get a better understanding
- * on how sort works in great detail.
+ * Notes: 'UPDATE_FILTERS' action is going to refresh
+ * the forms built on 'Filter' Component everytime the
+ * user interact with the forms, for this version;
+ * The 'FILTER_PRODUCTS' i am only defining how is
+ * gonna be 'FILTER_PRODUCTS' to be set. 
 */
 
 const filter_reducer = (state, action) => {
@@ -97,6 +96,23 @@ const filter_reducer = (state, action) => {
       })
     }
     return {...state, filtered_products: tempProducts}
+  }
+  /**here i build 'UPDATE_FILTERS' action*/
+  if ( action.type === UPDATE_FILTERS ) {
+    /**As i take the 'name' and 'value' from 
+     * the Filter Component and dispatched both
+     * from the context, i destructure it from,
+     * the 'action.payload'*/
+    const { name, value } = action.payload
+    /**i access dynamicly to throught the name and set
+     * the value to whatever i'm typing*/
+    return { ...state, filters:{...state.filters, [name]:value}}
+  }
+  /**for this version i am only defining how is
+   * gonna be 'FILTER_PRODUCTS' to be set */
+  if (action.type === FILTER_PRODUCTS ) {
+    console.log('filtering products')
+    return {...state}
   }
   
   throw new Error(`No Matching "${action.type}" - action type`)
