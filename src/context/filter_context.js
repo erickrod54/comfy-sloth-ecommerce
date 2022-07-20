@@ -12,16 +12,15 @@ import {
 } from '../actions'
 import { useProductsContext } from './products_context'
 
-/**comfy-sloth-ecommerce app version 16 - filter_context
+/**comfy-sloth-ecommerce app version 17 - filter_context
  * file - Features: 
  * 
- *      --> Implementing 'useEffect' to dispatch 'UPDATE_SORT' 
- *          action                                    
+ *      --> Setting up 'filter' state values.                                    
  * 
- * Notes: The 'useEffect' implementation to dispatch 
- * 'UPDATE_SORT' is made in order to use as dependencies
- * the products, and the state.sort prop -useEffect triggers
- * when the 'products' get mount and state.sort prop is avaible-
+ * Notes: This version will handle the set up of filter
+ * values in the intialState, it will be one level deep
+ * on the state, and it will be values to asign it as 
+ * .
 */
 
 /*here is the 'initialState' */
@@ -35,6 +34,18 @@ const initialState = {
 
   /**default prop for the 'Sort' > 'select form'*/
   sort:'price-lowest',
+
+  /**filter values */
+  filters:{
+    text:'',
+    company:'all',
+    category:'all',
+    color:'all',
+    min_price:0,
+    max_price:0,
+    price:0,
+    shipping:false,
+  }
 }
 
 const FilterContext = React.createContext()
