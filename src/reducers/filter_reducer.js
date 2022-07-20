@@ -9,22 +9,35 @@ import {
   CLEAR_FILTERS,
 } from '../actions'
 
-/**comfy-sloth-ecommerce app version 16 - filter_reducer
+/**comfy-sloth-ecommerce app version 17 - filter_reducer
  * file - Features: 
  * 
  *      --> Building 'SORT_PRODUCTS' action in order
  *          to trigger each action from the 'selection 
- *          form' - programaticlly approach -                                
+ *          form' - long way -
  * 
- * Notes: this programaticlly approach use ES6 methods as 'sort',
- * and 'localeCompare'
+ *      --> Mapping the 'action.payload' - 'products' - 
+ *          once load to set values to the 'filter'                                
+ * 
+ * Notes: this long way approach is using ES6 methods as 
+ * 'sort', and 'localeCompare', and to get a better understanding
+ * on how sort works in great detail.
 */
 
 const filter_reducer = (state, action) => {
   
   if (action.type === LOAD_PRODUCTS) {
+    /**here i map the products */
+    let maxPrice = action.payload.map((p) => p.price)
+    /**here i use ES6 'Math.max' to get the max price 
+     * from the 'maxPrice' array */
+    maxPrice = Math.max(...maxPrice)
+    //console.log('the max price ==>', maxPrice)
       return {...state, all_products:[...action.payload], 
-              filtered_products: [...action.payload]}    
+              filtered_products: [...action.payload],
+              filters: {...state.filters, max_price: maxPrice, price: 
+              maxPrice},
+            }    
   }
 
   /**here i build the 'SET_GRIDVIEW' action*/
@@ -55,7 +68,18 @@ const filter_reducer = (state, action) => {
     let tempProducts = [...filtered_products];
 
     if (sort === 'price-lowest') {
-      tempProducts = tempProducts.sort((a,b) => a.price - b.price)
+      tempProducts = tempProducts.sort((a,b) => {
+        /**lowest place first */
+        if (a.price < b.price) {
+          return -1
+        }
+        /**highest place after */
+        if (a.price > b.price) {
+          return 1
+        }
+        /**stays in the same place */
+        return 0
+      })
     }
     if (sort === 'price-highest') {
       tempProducts = tempProducts.sort((a,b) => b.price - a.price)
