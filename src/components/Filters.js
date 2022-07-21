@@ -4,8 +4,56 @@ import { useFilterContext } from '../context/filter_context'
 import { getUniqueValues, formatPrice } from '../utils/helpers'
 import { FaCheck } from 'react-icons/fa'
 
+/**comfy-sloth-ecommerce app version 18 - Filter
+ * Component - Features: 
+ * 
+ *      --> Destructuring the 'filters' object
+ *          from 'useFilterContext()'.
+ * 
+ *      --> Building the 'search' input form                                   
+ * 
+ * Notes: The 'search' input form is the first filter
+ * i'll be building them one buy one just to check how
+ * is the dynamics between linking the props with the 
+ * dispatch actions -on the context-, the reducer 
+ * actions and the Filter Components one by one 
+*/
+
 const Filters = () => {
-  return <h4>filters</h4>
+  const { 
+    filters:{
+      text,
+      category,
+      company,
+      color,
+      min_price,
+      price,
+      max_price,
+      shipping
+    },
+    updateFilters,
+    clearFilters,
+    all_products,
+  } = useFilterContext();
+
+  return(
+    <Wrapper>
+      <div className='content'>
+        <form onSubmit={(e) => e.preventDefault()}>
+          {/**search input */}
+          <input 
+            type='text' 
+            name='text' 
+            placeholder='search' 
+            className='search-input'
+            value={text}
+            onChange={updateFilters}
+            />
+          {/**end search input */}
+        </form>
+      </div>
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.section`
