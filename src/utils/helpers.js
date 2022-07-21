@@ -1,16 +1,18 @@
-/**comfy-sloth-ecommerce app version 5 - Product 
- * Component - Features: 
+/**comfy-sloth-ecommerce app version 19 - helpers 
+ * file - Features: 
  * 
- *      --> Building 'formatPrice' to handle 
- *         format of the price -this is not
- *         a covertion, its a visual matter-            
+ *      --> Building 'getUniqueValues' to get
+ *          unique values from whatever parameters
+ *          i pass througt it.             
  * 
- * Notes: the method is 'Intl.NumberFormat' with
- * the syntax as follows, and the style:'currency',
- * currency:'USD' props, i have to divide it by '100' 
- * this method autoticlly add the '$' sign -this case
- * because is US dollar- but depending on the currency
- * add the respective sign
+ * Notes: the ES6 flat() makes posible the access to 
+ * the 'colors' array inside the 'all_products' array
+ * 
+ * this helper this way can be apply to another 
+ * Components and features - also makes possible
+ * to add easyly any category, company and color
+ * without any need of large modifications, just
+ * only setting up in the data-
 */
 export const formatPrice = (number) => {
     return new Intl.NumberFormat('en-US', {
@@ -19,4 +21,17 @@ export const formatPrice = (number) => {
     }).format(number / 100)
 }
 
-export const getUniqueValues = () => {}
+/**'data' for 'Filters'  will be 'all_products'
+ * and 'type' will be 'categories' */
+export const getUniqueValues = (data,type) => {
+    /** 'item[type]' access dynamicly to the 'type' 
+     * througt the single 'data' > 'item' */
+    let unique = data.map((item) => item[type])
+
+    /**to access i conditionally get the type > color */
+    if (type === 'colors') {
+        /**then i reasign the 'unique' to 'unique.flat()'*/
+        unique = unique.flat()
+    }
+    return ['all', ...new Set(unique)]
+}
