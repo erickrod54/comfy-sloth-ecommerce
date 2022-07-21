@@ -4,19 +4,20 @@ import { useFilterContext } from '../context/filter_context'
 import { getUniqueValues, formatPrice } from '../utils/helpers'
 import { FaCheck } from 'react-icons/fa'
 
-/**comfy-sloth-ecommerce app version 18 - Filter
+/**comfy-sloth-ecommerce app version 19 - Filter
  * Component - Features: 
  * 
- *      --> Destructuring the 'filters' object
- *          from 'useFilterContext()'.
+ *      --> Implementing 'getUniqueValues' helper
+ *          function on category, company, and 
+ *          color.                                    
  * 
- *      --> Building the 'search' input form                                   
+ * Notes: The 'getUniqueValues' get two values 'data'
+ * - all_products - and 'type' -category, company, and 
+ * color -, when i log 'all_products' the color is an
+ * array inside of the 'all_products' array, so in order
+ * to apply the helper function i have to flat it
  * 
- * Notes: The 'search' input form is the first filter
- * i'll be building them one buy one just to check how
- * is the dynamics between linking the props with the 
- * dispatch actions -on the context-, the reducer 
- * actions and the Filter Components one by one 
+ *  reference --> helper.js
 */
 
 const Filters = () => {
@@ -35,6 +36,12 @@ const Filters = () => {
     clearFilters,
     all_products,
   } = useFilterContext();
+
+  const categories = getUniqueValues(all_products, 'category')
+  const companies = getUniqueValues(all_products, 'company')
+  const colors = getUniqueValues(all_products, 'colors')
+  console.log(colors)
+  
 
   return(
     <Wrapper>
