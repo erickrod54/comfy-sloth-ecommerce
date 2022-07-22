@@ -4,20 +4,22 @@ import { useFilterContext } from '../context/filter_context'
 import { getUniqueValues, formatPrice } from '../utils/helpers'
 import { FaCheck } from 'react-icons/fa'
 
-/**comfy-sloth-ecommerce app version 19 - Filter
+/**comfy-sloth-ecommerce app version 20 - Filter
  * Component - Features: 
  * 
- *      --> Implementing 'getUniqueValues' helper
- *          function on category, company, and 
- *          color.                                    
+ *      --> Rendering the 'categories'.
  * 
- * Notes: The 'getUniqueValues' get two values 'data'
- * - all_products - and 'type' -category, company, and 
- * color -, when i log 'all_products' the color is an
- * array inside of the 'all_products' array, so in order
- * to apply the helper function i have to flat it
+ *      --> Mapping 'categories' array after 
+ *          getting 'getUniqueValues'.
  * 
- *  reference --> helper.js
+ *      --> Triggering 'updateFilters' on clicking
+ *          each category.                                     
+ * 
+ * Notes: categories is getting render in a button so 
+ * i can't get the value directly as 'e.target.value' 
+ * so there is another ES6 value to get the text of a 
+ * button or tag, is 'e.target.textContent'
+ * 
 */
 
 const Filters = () => {
@@ -40,7 +42,7 @@ const Filters = () => {
   const categories = getUniqueValues(all_products, 'category')
   const companies = getUniqueValues(all_products, 'company')
   const colors = getUniqueValues(all_products, 'colors')
-  console.log(colors)
+  //console.log(colors)
   
 
   return(
@@ -57,6 +59,23 @@ const Filters = () => {
             onChange={updateFilters}
             />
           {/**end search input */}
+          {/**categories input */}
+          <div className='form-control'>
+            <h5>category</h5>
+            <div>
+              {categories.map((c, index) => {
+                return <button 
+                        key={index} 
+                        onClick={updateFilters}
+                        type='button'
+                        name='category'
+                        className={`${ category === c.toLowerCase() ? 
+                          'active' : null }`}
+                        >{c}</button>
+              })}
+            </div>
+          </div>
+          {/**end categories input */}
         </form>
       </div>
     </Wrapper>
