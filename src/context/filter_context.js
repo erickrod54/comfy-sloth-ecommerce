@@ -12,26 +12,16 @@ import {
 } from '../actions'
 import { useProductsContext } from './products_context'
 
-/**comfy-sloth-ecommerce app version 18 - filter_context
+/**comfy-sloth-ecommerce app version 20 - filter_context
  * file - Features: 
  * 
- *      --> Building 'updateFilters'.
+ *      --> Refactoring 'updateFilters' in order to
+ *          get the value of 'category'                                    
  * 
- *      --> Dispatching 'FILTER_PRODUCTS' action.
- * 
- *      --> Adding 'state.filters' as a dependency
- *          array for the useEffect before sort 
- *          action.                                    
- * 
- * Notes: 'updateFilters' will be an event features that
- * will trigger once detects change on any field of the
- * 'Filter' Component by the user actions and a cleanup
- * function 'clearFilters' to go back to the default
- * settings. 
- * 
- * for this version is going to get done filters > 'text'
- * prop that is a search field based on what the user type
- * in.
+ * Notes: By the name 'category' i am targeting the button
+ * on 'Filter' Component where i'm rendering the categories,
+ * then to get the value that is in a button i just apply 
+ * a different jsx event method 'e.target.textContent'
 */
 
 /*here is the 'initialState' */
@@ -106,9 +96,13 @@ export const FilterProvider = ({ children }) => {
   const updateFilters = (e) => {
       let name = e.target.name
       let value = e.target.value
+      
+      /**here i refactor to get the 
+       * text of the button */
+      if (name === 'category') {
+        value = e.target.textContent
+      }
 
-      //here i test it
-      //console.log('this is the name i get ==>', name, '=> and this is the value the user type ==>', value)
       dispatch({ type: UPDATE_FILTERS, payload:{ name, value }})
   }
 
