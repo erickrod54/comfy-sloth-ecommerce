@@ -4,22 +4,23 @@ import { useFilterContext } from '../context/filter_context'
 import { getUniqueValues, formatPrice } from '../utils/helpers'
 import { FaCheck } from 'react-icons/fa'
 
-/**comfy-sloth-ecommerce app version 20 - Filter
+/**comfy-sloth-ecommerce app version 21 - Filter
  * Component - Features: 
  * 
- *      --> Rendering the 'categories'.
+ *      --> Rendering the 'companies'.
  * 
- *      --> Mapping 'categories' array after 
+ *      --> Mapping 'companies' array after 
  *          getting 'getUniqueValues'.
  * 
  *      --> Triggering 'updateFilters' on clicking
  *          each category.                                     
  * 
- * Notes: categories is getting render in a button so 
- * i can't get the value directly as 'e.target.value' 
- * so there is another ES6 value to get the text of a 
- * button or tag, is 'e.target.textContent'
- * 
+ * Notes: By the name 'company' i am targeting the select
+ * on 'Filter' Component where i'm rendering the each 'company'
+ * by mapping it, then to get the value and by triggering 
+ * 'updateFilters' i am aign in it dynamicly to the 'company'
+ * prop on the filters object - check chrome > Components  > 
+ * filters - and as the user interacts will change the value
 */
 
 const Filters = () => {
@@ -76,6 +77,22 @@ const Filters = () => {
             </div>
           </div>
           {/**end categories input */}
+          {/**companies */}
+          <div className='form-control'>
+            <h5>companies</h5>
+            <select 
+              name='company' 
+              value={company} 
+              onChange={updateFilters} 
+              className='company'>
+              {companies.map((c, index) => {
+                return (
+                  <option key={index} value={c}>{c}</option>
+                )
+              })}
+            </select>
+          </div>
+          {/**end companies */}
         </form>
       </div>
     </Wrapper>
