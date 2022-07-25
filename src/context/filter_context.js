@@ -12,16 +12,18 @@ import {
 } from '../actions'
 import { useProductsContext } from './products_context'
 
-/**comfy-sloth-ecommerce app version 20 - filter_context
+/**comfy-sloth-ecommerce app version 22 - filter_context
  * file - Features: 
  * 
  *      --> Refactoring 'updateFilters' in order to
- *          get the value of 'category'                                    
+ *          get the value of 'colors'                                    
  * 
- * Notes: By the name 'category' i am targeting the button
+ * Notes: By the name 'colors' i am targeting the button
  * on 'Filter' Component where i'm rendering the categories,
  * then to get the value that is in a button i just apply 
- * a different jsx event method 'e.target.textContent'
+ * a different jsx event method 'e.target.dataset.color'
+ * i'll get each 'color' and and asign it dymaicly to the
+ * check chrome > Components  > filters
 */
 
 /*here is the 'initialState' */
@@ -101,6 +103,9 @@ export const FilterProvider = ({ children }) => {
        * text of the button */
       if (name === 'category') {
         value = e.target.textContent
+      }
+      if (name === 'color') {
+        value = e.target.dataset.color
       }
 
       dispatch({ type: UPDATE_FILTERS, payload:{ name, value }})
