@@ -9,18 +9,14 @@ import {
   CLEAR_FILTERS,
 } from '../actions'
 
-/**comfy-sloth-ecommerce app version 18 - filter_reducer
+/**comfy-sloth-ecommerce app version 24 - filter_reducer
  * file - Features: 
  * 
- *      --> Building 'UPDATE_FILTERS'.
+ *      --> Building 'CLEAR_FILTERS' action.                            
  * 
- *      --> Building 'FILTER_PRODUCTS'.                                
- * 
- * Notes: 'UPDATE_FILTERS' action is going to refresh
- * the forms built on 'Filter' Component everytime the
- * user interact with the forms, for this version;
- * The 'FILTER_PRODUCTS' i am only defining how is
- * gonna be 'FILTER_PRODUCTS' to be set. 
+ * Notes: the 'CLEAR_FILTERS' action is going to
+ * come back the filters state props to the 
+ * 'initialState' 
 */
 
 const filter_reducer = (state, action) => {
@@ -99,20 +95,31 @@ const filter_reducer = (state, action) => {
   }
   /**here i build 'UPDATE_FILTERS' action*/
   if ( action.type === UPDATE_FILTERS ) {
-    /**As i take the 'name' and 'value' from 
-     * the Filter Component and dispatched both
-     * from the context, i destructure it from,
-     * the 'action.payload'*/
     const { name, value } = action.payload
-    /**i access dynamicly to throught the name and set
-     * the value to whatever i'm typing*/
     return { ...state, filters:{...state.filters, [name]:value}}
   }
-  /**for this version i am only defining how is
-   * gonna be 'FILTER_PRODUCTS' to be set */
   if (action.type === FILTER_PRODUCTS ) {
     console.log('filtering products')
     return {...state}
+  }
+  if (action.type === CLEAR_FILTERS) {
+    /**i spread/copy the 'state'; The 
+     * 'state.filters' is to access to
+     * the 'state.filters.max_price' and set
+     * it to the 'price' prop as default 
+    */
+    return { 
+      ...state, 
+      filters: {
+        ...state.filters,
+        text:'',
+        company:'all',
+        category:'all',
+        color:'all',
+        price: state.filters.max_price,
+        shipping:false,
+      }
+    }
   }
   
   throw new Error(`No Matching "${action.type}" - action type`)
