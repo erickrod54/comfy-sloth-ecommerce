@@ -4,23 +4,26 @@ import { useFilterContext } from '../context/filter_context'
 import { getUniqueValues, formatPrice } from '../utils/helpers'
 import { FaCheck } from 'react-icons/fa'
 
-/**comfy-sloth-ecommerce app version 21 - Filter
+/**comfy-sloth-ecommerce app version 22 - Filter
  * Component - Features: 
  * 
- *      --> Rendering the 'companies'.
+ *      --> Rendering the 'colors'.
  * 
- *      --> Mapping 'companies' array after 
+ *      --> Mapping 'colors' array after 
  *          getting 'getUniqueValues'.
  * 
  *      --> Triggering 'updateFilters' on clicking
- *          each category.                                     
+ *          each color.                                     
  * 
- * Notes: By the name 'company' i am targeting the select
+ * Notes: By the name 'color' i am targeting the select
  * on 'Filter' Component where i'm rendering the each 'company'
  * by mapping it, then to get the value and by triggering 
- * 'updateFilters' i am aign in it dynamicly to the 'company'
+ * 'updateFilters' i am aign in it dynamicly to the 'color'
  * prop on the filters object - check chrome > Components  > 
  * filters - and as the user interacts will change the value
+ * 
+ * The button as an attribute will have ES6 dataset method 
+ * 'data-color' and will have the value of each color.
 */
 
 const Filters = () => {
@@ -93,6 +96,54 @@ const Filters = () => {
             </select>
           </div>
           {/**end companies */}
+          {/**colors */}
+          <div className='form-control'>
+            <h5>colors</h5>
+            <div className='colors'>
+              {
+                colors.map((c, index) => {
+                  /**a conditional rendering for
+                   * the 'all' button */
+                  if (c === 'all') {
+                    return(
+                      <button 
+                      key={index}
+                      name='color' 
+                      onClick={updateFilters} 
+                      data-color='all'
+                      className={`${ color === 'all' ? 'all-btn active' : 'all-btn'}`}
+                      >
+                        all
+                      </button>
+                    )
+                  }
+                  /**then i render the colors in a 
+                   * button, the 'data- *'  i what
+                   * i use to get the data on 
+                   * 'filter_context > updateFilters'
+                   * by using ES6 dataset method.
+                   * */
+                  return (
+                    <button 
+                    key={index} 
+                    name='color'
+                    style={{background:c}}
+                    className={`${color === c ? 
+                    'color-btn active' : 'color-btn'}`}
+                    data-color={c}
+                    onClick={updateFilters}
+                    >
+                      {/**as value i conditionally render
+                       * the icon 'FaCheck' if the color 
+                       * exists */}
+                      {color === c ? <FaCheck /> : null} 
+                    </button>)              
+                  
+                })
+              }
+            </div>
+          </div>
+          {/**end of colors */}
         </form>
       </div>
     </Wrapper>
