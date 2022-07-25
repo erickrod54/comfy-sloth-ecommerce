@@ -4,26 +4,23 @@ import { useFilterContext } from '../context/filter_context'
 import { getUniqueValues, formatPrice } from '../utils/helpers'
 import { FaCheck } from 'react-icons/fa'
 
-/**comfy-sloth-ecommerce app version 22 - Filter
+/**comfy-sloth-ecommerce app version 23 - Filter
  * Component - Features: 
  * 
- *      --> Rendering the 'colors'.
- * 
- *      --> Mapping 'colors' array after 
- *          getting 'getUniqueValues'.
+ *      --> Rendering the 'price'.
  * 
  *      --> Triggering 'updateFilters' on clicking
- *          each color.                                     
+ *          each price.                                     
  * 
- * Notes: By the name 'color' i am targeting the select
- * on 'Filter' Component where i'm rendering the each 'company'
- * by mapping it, then to get the value and by triggering 
- * 'updateFilters' i am aign in it dynamicly to the 'color'
- * prop on the filters object - check chrome > Components  > 
- * filters - and as the user interacts will change the value
+ * Notes: By the name 'price' i am targeting the im 
+ * triggering 'updateFiletrs' and getting the value, 
+ * i am aign in it dynamicly to the 'price' the range
+ * input -is an html element- so i'll get the defualt
+ * 'price' as a number but as i change the range i'll 
+ * get a string - in next version is going to be fix
+ * to get numbers exclusively- prop on the filters 
+ * object - check chrome > Components  > filters 
  * 
- * The button as an attribute will have ES6 dataset method 
- * 'data-color' and will have the value of each color.
 */
 
 const Filters = () => {
@@ -144,6 +141,26 @@ const Filters = () => {
             </div>
           </div>
           {/**end of colors */}
+          {/**price */}
+          
+          {/**the 'range' input type is an html
+           * element that requires
+           * three att 'min', 'max' and a 'value'
+           * to set a 'range'
+          */}
+          <div className='form-control'>
+            <h5>price</h5>
+            <p className='price'>{formatPrice(price)}</p>
+            <input 
+            type='range' 
+            name='price' 
+            onChange={updateFilters} 
+            min={min_price}
+            max={max_price}
+            value={price}
+            />
+          </div>
+          {/**end of price */}
         </form>
       </div>
     </Wrapper>
