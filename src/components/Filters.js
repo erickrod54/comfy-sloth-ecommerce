@@ -4,13 +4,15 @@ import { useFilterContext } from '../context/filter_context'
 import { getUniqueValues, formatPrice } from '../utils/helpers'
 import { FaCheck } from 'react-icons/fa'
 
-/**comfy-sloth-ecommerce app version 24 - Filter
+/**comfy-sloth-ecommerce app version 25 - Filter
  * Component - Features: 
  * 
- *      --> Building 'Shipping' feature                                     
+ *      --> Adding a button to trigger 'clearFilters' 
+ *         feature                                     
  * 
- * Notes: By this version all the filters has been 
- * built
+ * Notes: This functionality is going to be dispatched
+ * on 'filter_context' and the action is going to be 
+ * build in the 'filter_reducer'
 */
 
 const Filters = () => {
@@ -167,6 +169,14 @@ const Filters = () => {
               checked={shipping}/>
           </div>
           {/**end of shipping */}
+          {/**clear filters */}
+          <button 
+            type='button' 
+            className='clear-btn' 
+            onClick={clearFilters}>
+              clear filters
+          </button>
+          {/**end of clear filers */}
         </form>
       </div>
     </Wrapper>
