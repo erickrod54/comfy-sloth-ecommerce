@@ -4,23 +4,13 @@ import { useFilterContext } from '../context/filter_context'
 import { getUniqueValues, formatPrice } from '../utils/helpers'
 import { FaCheck } from 'react-icons/fa'
 
-/**comfy-sloth-ecommerce app version 23 - Filter
+/**comfy-sloth-ecommerce app version 24 - Filter
  * Component - Features: 
  * 
- *      --> Rendering the 'price'.
+ *      --> Building 'Shipping' feature                                     
  * 
- *      --> Triggering 'updateFilters' on clicking
- *          each price.                                     
- * 
- * Notes: By the name 'price' i am targeting the im 
- * triggering 'updateFiletrs' and getting the value, 
- * i am aign in it dynamicly to the 'price' the range
- * input -is an html element- so i'll get the defualt
- * 'price' as a number but as i change the range i'll 
- * get a string - in next version is going to be fix
- * to get numbers exclusively- prop on the filters 
- * object - check chrome > Components  > filters 
- * 
+ * Notes: By this version all the filters has been 
+ * built
 */
 
 const Filters = () => {
@@ -142,7 +132,7 @@ const Filters = () => {
           </div>
           {/**end of colors */}
           {/**price */}
-          
+
           {/**the 'range' input type is an html
            * element that requires
            * three att 'min', 'max' and a 'value'
@@ -161,6 +151,22 @@ const Filters = () => {
             />
           </div>
           {/**end of price */}
+          {/**shipping */}
+          <div className='form-control shipping'>
+            <label htmlFor='shipping'>
+              free shipping
+            </label>
+            {/**the 'shipping' will be a checkbox
+             * and the 'shipping' value will switch
+             * between 'true' and 'false' */}
+            <input 
+              type='checkbox' 
+              name='shipping' 
+              id='shipping' 
+              onChange={updateFilters} 
+              checked={shipping}/>
+          </div>
+          {/**end of shipping */}
         </form>
       </div>
     </Wrapper>
