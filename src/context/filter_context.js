@@ -12,18 +12,23 @@ import {
 } from '../actions'
 import { useProductsContext } from './products_context'
 
-/**comfy-sloth-ecommerce app version 22 - filter_context
+/**comfy-sloth-ecommerce app version 24 - filter_context
  * file - Features: 
  * 
- *      --> Refactoring 'updateFilters' in order to
- *          get the value of 'colors'                                    
+ *      --> Refactoring 'updateFilters' to convert
+ *          'price' after the user action in a 
+ *          number.
  * 
- * Notes: By the name 'colors' i am targeting the button
- * on 'Filter' Component where i'm rendering the categories,
- * then to get the value that is in a button i just apply 
- * a different jsx event method 'e.target.dataset.color'
- * i'll get each 'color' and and asign it dymaicly to the
- * check chrome > Components  > filters
+ *      --> Refactoring 'updateFilters' to asign
+ *          dymanicly the value 'checked' - true or
+ *          false to the shipping-   
+ * 
+ *      --> Dispathing 'clearFilters' action.                                    
+ * 
+ * Notes: for the 'price' is use the ES6 method 'Number()' 
+ * that converts the strings in number, and for 'shipping'
+ * 'e.target.checked' to asign dynamicly the value -true
+ * or false- to the shipping prop 
 */
 
 /*here is the 'initialState' */
@@ -107,12 +112,17 @@ export const FilterProvider = ({ children }) => {
       if (name === 'color') {
         value = e.target.dataset.color
       }
-
+      if (name === 'price') {
+        value = Number(value)
+      }
+      if (name === 'shipping') {
+        value = e.target.checked
+      }
       dispatch({ type: UPDATE_FILTERS, payload:{ name, value }})
   }
 
   const clearFilters = () => {
-
+    dispatch({ type: CLEAR_FILTERS })
   }
 
   return (
