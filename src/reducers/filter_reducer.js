@@ -9,14 +9,16 @@ import {
   CLEAR_FILTERS,
 } from '../actions'
 
-/**comfy-sloth-ecommerce app version 25 - filter_reducer
+/**comfy-sloth-ecommerce app version 26 - filter_reducer
  * file - Features: 
  * 
  *      --> Building 'FILTER_PRODUCTS' action.                            
  *         -all concern about functionality-
  * 
  * Notes: The 'FILTER_PRODUCTS' by this version has filters
- * set for text - search box -, category, and company 
+ * set for text - search box -, category, company 
+ * 
+ * also colors, price, and shipping
 */
 
 const filter_reducer = (state, action) => {
@@ -129,6 +131,26 @@ const filter_reducer = (state, action) => {
       company === company)
     }
 
+    //colors
+    if (color !== 'all') {
+      tempProducts = tempProducts.filter((product) => {
+        return product.colors.find((c) => c === color)
+      })
+    }
+    
+    //price
+    /**the filter by price has no condition because
+     * depends on the user interaction with the range
+     * input*/
+    tempProducts = tempProducts.filter((product) => 
+    product.price <= price)
+
+    //shipping
+    /**only checks for the shipping value */
+    if (shipping) {
+      tempProducts = tempProducts.filter((product) => 
+      product.shipping === true)
+    }
     return {...state, filtered_products: tempProducts }
   }
   if (action.type === CLEAR_FILTERS) {
