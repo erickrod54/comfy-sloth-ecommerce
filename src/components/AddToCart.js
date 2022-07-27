@@ -5,26 +5,25 @@ import { FaCheck } from 'react-icons/fa'
 import { useCartContext } from '../context/cart_context'
 import AmountButtons from './AmountButtons'
 
-/**comfy-sloth-ecommerce app version 11 - AddToCart 
+/**comfy-sloth-ecommerce app version 27 - AddToCart 
  * file - Features: 
  * 
- *      --> Placing the 'Amount' Component.
+ *      --> Destructuring 'addToCart' feature from
+ *          'useCartContext()'.
  * 
- *      --> Building a state to handle the amount
- *          to 'increase' and 'decrease' a product.
- *    
- *      --> Building the 'increase' and 'decrease' 
- *         feature
+ *      --> Triggering 'addToCart' on clicking 
+ *          add to cart button                       
  * 
- *      --> Drilling the 'increase' and 'decrease' 
- *         features as props to the 'Amount' 
- *         Component.                     
- * 
- * Notes: Implementing the 'increase' and 'decrease' 
- * feature for the 'product' added to the cart
+ * Notes: the add to cart button will invoke with
+ * the prop values of 'id', 'mainColor', 'amount', and
+ * 'product' -to define the unique product being added
+ * to the cart, and this comes from the context-
 */
 
 const AddToCart = ({ product }) => {
+
+  /**here i destructure 'addToCart' feature*/
+  const { addToCart } = useCartContext()
 
   /**here i destructure the 'product' props */
   const { id, stock, colors } = product;
@@ -76,7 +75,11 @@ const AddToCart = ({ product }) => {
               amount={amount} 
               increase={increase} 
               decrease={decrease}/>
-          <Link to='/cart' className='btn'>
+          {/**here i trigger the addToCart feature */}    
+          <Link 
+            to='/cart' 
+            className='btn' 
+            onClick={() => addToCart(id, mainColor, amount, product)}>
             add to cart
           </Link>
         </div>
