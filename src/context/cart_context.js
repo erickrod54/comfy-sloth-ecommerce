@@ -8,19 +8,13 @@ import {
   COUNT_CART_TOTALS,
 } from '../actions'
 
-/**comfy-sloth-ecommerce app version 26 - cart_context
+/**comfy-sloth-ecommerce app version 27 - cart_context
  * file - Features: 
  * 
- *      --> Building the 'initialState'.
+ *      --> Building the 'addToCart' feature.
  * 
- *      --> Building state to dispatch actions.
- * 
- *      --> Providing the state throught the 
- *          provider. 
- * 
- * Notes: the values of the initial state they are
- * going to be filled by the user interaction with 
- * the cart, the shipping_fee value is in cents
+ * Notes: the 'ADD_TO_CART' action will have the payload
+ * of 'id','color','amount', 'product'
  * 
 */
 
@@ -37,8 +31,16 @@ const CartContext = React.createContext()
 
 export const CartProvider = ({ children }) => {
   const [ state, dispatch ] = useReducer(reducer, initialState)
+
+  //add to cart
+  const addToCart = ( id, color, amount, product ) => {
+    dispatch({type: ADD_TO_CART, payload: { id,color,amount, product }})
+  }
   return (
-    <CartContext.Provider value={{...state}}>{children}</CartContext.Provider>
+    <CartContext.Provider value={{
+                            ...state,
+                            addToCart
+                            }}>{children}</CartContext.Provider>
   )
 }
 // make sure use
