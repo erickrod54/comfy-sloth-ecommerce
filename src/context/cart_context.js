@@ -8,14 +8,15 @@ import {
   COUNT_CART_TOTALS,
 } from '../actions'
 
-/**comfy-sloth-ecommerce app version 27 - cart_context
+/**comfy-sloth-ecommerce app version 28 - cart_context
  * file - Features: 
  * 
- *      --> Building the 'addToCart' feature.
+ *      --> Building basic empty functions for 'remove 
+ *          item', 'toggle', 'clear cart' features
  * 
- * Notes: the 'ADD_TO_CART' action will have the payload
- * of 'id','color','amount', 'product'
- * 
+ * Notes: for this version they are going to be defined
+ * only, in later version they are going to be built in
+ * detail
 */
 
 /**adding the 'cart', 'total_items', 
@@ -32,6 +33,15 @@ const CartContext = React.createContext()
 export const CartProvider = ({ children }) => {
   const [ state, dispatch ] = useReducer(reducer, initialState)
 
+  // remove item 
+  const removeItem = (id) => {}
+
+  //toggle
+  const toggleAmount = (id, value) => {}
+  
+  //clear cart
+  const clearCart = () => {}
+
   //add to cart
   const addToCart = ( id, color, amount, product ) => {
     dispatch({type: ADD_TO_CART, payload: { id,color,amount, product }})
@@ -39,7 +49,10 @@ export const CartProvider = ({ children }) => {
   return (
     <CartContext.Provider value={{
                             ...state,
-                            addToCart
+                            addToCart,
+                            removeItem,
+                            toggleAmount,
+                            clearCart
                             }}>{children}</CartContext.Provider>
   )
 }
