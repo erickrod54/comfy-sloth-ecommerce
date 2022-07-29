@@ -8,21 +8,40 @@ import {
   COUNT_CART_TOTALS,
 } from '../actions'
 
-/**comfy-sloth-ecommerce app version 28 - cart_context
+/**comfy-sloth-ecommerce app version 29 - cart_context
  * file - Features: 
  * 
- *      --> Building basic empty functions for 'remove 
- *          item', 'toggle', 'clear cart' features
+ *      --> Building persistance using 'localStorage'
+ *          with useEffect for the 'cart' data.
  * 
- * Notes: for this version they are going to be defined
- * only, in later version they are going to be built in
- * detail
+ * Notes: The 'localStorage' is the browser API that 
+ * i am going to use to create persistance, when i add
+ * items to the cart i want to keep them even if i refresh
+ * the page - unless i removeItem -
+ * 
+ * the main goal of this version is to save the cart state
+ * in the 'localStorage' API
 */
+
+/**here i build 'getLocalStorage'*/
+const getLocalStorage = () => {
+  let cart = localStorage.getItem('cart');
+
+  if (cart) {
+    /**i parse the item */
+    return JSON.parse(localStorage.getItem('cart'))
+  }else{
+    /**if no 'cart' i return empty array*/
+    return[]
+  }
+}
 
 /**adding the 'cart', 'total_items', 
  * 'total_amount', 'shipping_fee' */
 const initialState = {
-  cart:[],
+  /**'getLocalStorage' will trigger as 'cart' 
+   * value*/
+  cart: getLocalStorage(),
   total_items:0,
   total_amount:0,
   shipping_fee:534,
@@ -46,6 +65,13 @@ export const CartProvider = ({ children }) => {
   const addToCart = ( id, color, amount, product ) => {
     dispatch({type: ADD_TO_CART, payload: { id,color,amount, product }})
   }
+
+  /**depending on the 'state.cart' changes i set 'localStorage'
+   * to the 'state.cart' value */
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(state.cart))
+  },[state.cart])
+
   return (
     <CartContext.Provider value={{
                             ...state,
