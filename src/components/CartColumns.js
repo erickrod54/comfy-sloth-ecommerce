@@ -1,8 +1,31 @@
 import React from 'react'
 import styled from 'styled-components'
 
+/**comfy-sloth-ecommerce app version 29 - CartColumn
+ * Component - Features: 
+ * 
+ *      --> Building 'CartColumns' Component
+ * 
+ * Notes: This is more than a functional component is 
+ * to visualize better the information from the 
+ * 'CartItem' thats being map in the 'CartContent'
+ * - as a table content aspect -
+*/
+
 const CartColumns = () => {
-  return <h4>cart columns</h4>
+
+  return(
+    <Wrapper>
+      <div className='content'>
+        <h5>item</h5>
+        <h5>price</h5>
+        <h5>quantity</h5>
+        <h5>subtotal</h5>
+        <span></span>
+      </div>
+      <hr />
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.div`
