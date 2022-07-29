@@ -5,8 +5,54 @@ import { useUserContext } from '../context/user_context'
 import { formatPrice } from '../utils/helpers'
 import { Link } from 'react-router-dom'
 
+/**comfy-sloth-ecommerce app version 29 - CartTotals
+ * Component - Features: 
+ * 
+ *      --> Building 'CartTotals' Component
+ * 
+ *      --> Destructuring 'total_amount' and 'shipping_fee' 
+ *          from 'useCartContext()'
+ * 
+ * Notes: the goal of this component is to render:
+ * 
+ *    subtotal --> total_amount
+ * 
+ *    shipping fee --> shipping_fee
+ * 
+ *    order total --> total_amount + shipping_fee
+ * 
+ * all of these amounts formmated.
+*/
+
 const CartTotals = () => {
-  return <h4>cart totals</h4>
+
+  const { total_amount, shipping_fee } = useCartContext();
+
+  return(
+    <Wrapper> 
+      <div>
+        <article>
+          <h5>subtotal:
+             <span>{formatPrice(total_amount)}
+             </span>
+          </h5>
+          <p>shipping fee: 
+            <span>{formatPrice(shipping_fee)}
+            </span>
+          </p>
+          <hr />
+          <h4>order total: 
+            <span>
+              {formatPrice(total_amount + shipping_fee)
+              }</span>
+          </h4>
+        </article>
+        <Link to='/checkout' className='btn'>
+          proceed to checkout
+        </Link>
+      </div>
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.section`
