@@ -6,8 +6,55 @@ import CartColumns from './CartColumns'
 import CartItem from './CartItem'
 import CartTotals from './CartTotals'
 
+/**comfy-sloth-ecommerce app version 29 - CartContent
+ * Component - Features: 
+ * 
+ *      --> Destructuring 'cart' data and 
+ *         clearCart feature from 
+ *         'useCartContext()'.
+ * 
+ *      --> Mapping the 'cart' and rendering it
+ *          in the 'CartItem' Component. 
+ *  
+ *      --> Importing and Placing 'CartColumns'
+ *          Component.
+ * 
+ *      --> Importing and Placing 'CartTotals'
+ *          Component.
+ * 
+ * Notes: By this version is only placing the components
+ * on the UI, so in next versions they are going to be built,
+ * as the buttons 'continue shopping' and 'clearCart' 
+ * functionality 
+*/
+
 const CartContent = () => {
-  return <h4>cart content </h4>
+
+  const  { cart, clearCart } = useCartContext()
+
+  return(
+    <Wrapper className='section section-center'>
+      <CartColumns />
+      {
+        cart.map((item) => {
+          return <CartItem key={item.id} {...item} />
+        })}
+        <hr />
+        <div className='link-container'>
+          <Link to='/products' className='link-btn' >
+            continue shopping
+          </Link>
+          <button 
+            type='button' 
+            className='link-btn clear-btn'
+            onClick={clearCart}
+            >
+              clear shopping cart
+            </button>
+        </div>
+        <CartTotals />
+    </Wrapper>
+  )
 }
 const Wrapper = styled.section`
   .link-container {
