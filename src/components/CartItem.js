@@ -4,8 +4,79 @@ import { formatPrice } from '../utils/helpers'
 import AmountButtons from './AmountButtons'
 import { FaTrash } from 'react-icons/fa'
 import { useCartContext } from '../context/cart_context'
-const CartItem = () => {
-  return <h4>cart item</h4>
+
+/**comfy-sloth-ecommerce app version 30 - CartItem
+ * Component - Features: 
+ * 
+ *      --> Building 'cartItem' Component.
+ * 
+ *      --> Destructuring 'removeItem', and 
+ *         'toggleAmount' from 'useCartContext()'.
+ * 
+ *      --> Destructuring, placing and styling
+ *          'id', 'image', 'name', 'color', 'price', 
+ *          and 'amount' items props.
+ * 
+ *      --> Building 'increase' and 'decrease' 
+ *          feature.
+ * 
+ * Notes: By this version is only setting up the UI
+ * -'CartItem' is a Component inside the 'CartContent'
+ * reference to it to see how the columns and visual
+ * aspect is made-
+ * 
+ * The 'increase' and 'decrease' feature will trigger
+ * toggleAmount, the first will use 'inc' and the second
+ * will use 'dec' as the value
+*/
+
+/**here i destructure the cartItem props -comes form cartContent- */
+const CartItem = ({ id, image, name, color, price, amount }) => {
+
+  /**here i destructure form the context */
+  const { removeItem, toggleAmount } = useCartContext();
+
+  /**i set both functions as a 'placeholders' -empty functions- 
+   * in order to finish up the UI */
+  const increase = () => {
+    toggleAmount( id, 'inc')
+  }
+
+  const decrease = () => {
+    toggleAmount( id, 'dec')
+  }
+
+  /**here i place props, style and build the Component */
+  return(
+    <Wrapper>
+      <div className='title'>
+        <img src={image} alt={name} />
+        <div>
+          <h5 className='name'>{name}</h5>
+          <p className='color'>
+            color: <span style={{background: color}} />
+          </p>
+          <h5 className='price-small'
+          >{formatPrice(price)}
+          </h5>
+        </div>
+      </div>
+      <h5 className='price'>{formatPrice(price)}</h5>
+      <AmountButtons 
+          amount={amount} 
+          increase={increase} 
+          decrease={decrease}/>
+      <h5 className='subtotal'>
+        {formatPrice( price * amount)}
+      </h5>
+      <button 
+        type='button' 
+        className='remove-btn' 
+        onClick={() => removeItem(id)}>
+          <FaTrash />
+      </button>
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.article`
