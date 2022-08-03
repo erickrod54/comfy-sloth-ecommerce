@@ -6,23 +6,20 @@ import { useProductsContext } from '../context/products_context'
 import { useCartContext } from '../context/cart_context'
 import { useUserContext } from '../context/user_context'
 
-/**comfy-sloth-ecommerce app version 2 - CartButtons 
+/**comfy-sloth-ecommerce app version 30 - CartButtons 
  * Component - Features: 
  * 
- *      --> Destructuring 'closeSidebar' from 
- *          'useProductsContext' context.
+ *      --> Destructuring 'total_items' prop from 
+ *          'useCartContext()' 
  * 
- *      --> Triggering 'closeSidebar' on clicking 
- *          '<FaShoppingCart />' link.
- * 
- * Notes: As this Component contain the 'Cart' Link and the 
- * 'Login' Link they have to "closeSidebar" and place navigation
- * on their resective pages - Login will be modified in next 
- * versions-
+ * Notes: I destructure 'total_items' prop from 
+ * 'useCartContext()' in order to start setting 
+ * the 'total_items' on the shopping cart icon
 */
 const CartButtons = () => {
 
   const { closeSidebar } = useProductsContext()
+  const { total_items } = useCartContext()
 
   //console.log('I received the closeSidebar on CartButtons ==>', closeSidebar)
   return(
@@ -35,7 +32,7 @@ const CartButtons = () => {
           Cart
           <FaShoppingCart />
           <span className='cart-value'>
-            12
+            {total_items}
           </span>
         </span>
       </Link>
