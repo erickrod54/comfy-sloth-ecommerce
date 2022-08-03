@@ -8,28 +8,15 @@ import {
   COUNT_CART_TOTALS,
 } from '../actions'
 
-/**comfy-sloth-ecommerce app version 30 - cart_context
+/**comfy-sloth-ecommerce app version 31 - cart_context
  * file - Features: 
  * 
- *      --> Dispatching 'removeItem' action.
+ *      --> Dispatching 'COUNT_CART_TOTALS' action.
  * 
- *      --> Dispathing 'clearCart' action.
- * 
- *      --> Building 'toggleCart' feature.
- * 
- * Notes: Both of these actions are going to be built
- * at the 'cart_reducer' js file 
- * 
- * The 'toggleCart' feature is related with 
- * increasing and decreasing the 'item' units
- * added to the cart.
- * 
- * All the products data as 'id', 'color', 'amount', 
- * and 'product' can be used because they are 
- * provided for one level up provider -checkout
- * on index- and also because they are drilled 
- * throught the function on the Component -CartItem-
- * throught the provider.
+ * Notes: the 'COUNT_CART_TOTALS' has been dispatched from 
+ * the form the useEffect where the 'state.cart' changes 
+ * are saved on 'localStorage' - so this value will persist
+ * to-
 */
 
 /**here i build 'getLocalStorage'*/
@@ -90,7 +77,11 @@ export const CartProvider = ({ children }) => {
 
   /**depending on the 'state.cart' changes i set 'localStorage'
    * to the 'state.cart' value */
+  
+  /**here i'll dispatch the action to set the 'total_items' 
+   * cart value*/
   useEffect(() => {
+    dispatch({ type: COUNT_CART_TOTALS })
     localStorage.setItem('cart', JSON.stringify(state.cart))
   },[state.cart])
 
