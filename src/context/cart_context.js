@@ -8,19 +8,28 @@ import {
   COUNT_CART_TOTALS,
 } from '../actions'
 
-/**comfy-sloth-ecommerce app version 29 - cart_context
+/**comfy-sloth-ecommerce app version 30 - cart_context
  * file - Features: 
  * 
- *      --> Building persistance using 'localStorage'
- *          with useEffect for the 'cart' data.
+ *      --> Dispatching 'removeItem' action.
  * 
- * Notes: The 'localStorage' is the browser API that 
- * i am going to use to create persistance, when i add
- * items to the cart i want to keep them even if i refresh
- * the page - unless i removeItem -
+ *      --> Dispathing 'clearCart' action.
  * 
- * the main goal of this version is to save the cart state
- * in the 'localStorage' API
+ *      --> Building 'toggleCart' feature.
+ * 
+ * Notes: Both of these actions are going to be built
+ * at the 'cart_reducer' js file 
+ * 
+ * The 'toggleCart' feature is related with 
+ * increasing and decreasing the 'item' units
+ * added to the cart.
+ * 
+ * All the products data as 'id', 'color', 'amount', 
+ * and 'product' can be used because they are 
+ * provided for one level up provider -checkout
+ * on index- and also because they are drilled 
+ * throught the function on the Component -CartItem-
+ * throught the provider.
 */
 
 /**here i build 'getLocalStorage'*/
@@ -53,13 +62,26 @@ export const CartProvider = ({ children }) => {
   const [ state, dispatch ] = useReducer(reducer, initialState)
 
   // remove item 
-  const removeItem = (id) => {}
+  /**here i dispatch the action and the 'id' as a payload*/
+  const removeItem = (id) => {
+    dispatch({ type: REMOVE_CART_ITEM, payload:id })
+  }
 
   //toggle
-  const toggleAmount = (id, value) => {}
+  /**this 'id' is the value of the 'id' of the 
+   * item added to the cart 'id + color' 
+   * reference to ==> cart_reducer js file */
+
+  const toggleAmount = (id, value) => {
+    console.log('the id is ==>', id, 'and the value is ==>', value)
+    dispatch({ type: TOGGLE_CART_ITEM_AMOUNT, payload:{ id, value }})
+  }
   
   //clear cart
-  const clearCart = () => {}
+  /**here i just dispatch the action */
+  const clearCart = () => {
+    dispatch({ type: CLEAR_CART })
+  }
 
   //add to cart
   const addToCart = ( id, color, amount, product ) => {
