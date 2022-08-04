@@ -6,20 +6,34 @@ import { useProductsContext } from '../context/products_context'
 import { useCartContext } from '../context/cart_context'
 import { useUserContext } from '../context/user_context'
 
-/**comfy-sloth-ecommerce app version 30 - CartButtons 
+/**comfy-sloth-ecommerce app version 31 - CartButtons 
  * Component - Features: 
  * 
- *      --> Destructuring 'total_items' prop from 
- *          'useCartContext()' 
+ *      --> Destructuring loginWithRedirect, myUser, 
+ *          logout from 'useUserContext()'
+ *    
+ *      --> Building 'login' feature.
+ *  
+ *      --> Building 'logout' feature.
  * 
- * Notes: I destructure 'total_items' prop from 
- * 'useCartContext()' in order to start setting 
- * the 'total_items' on the shopping cart icon
+ *      --> Flipping between 'login' and
+ *          'logout' feature.
+ * 
+ * Notes: the specific code and method for 'login' and
+ * 'logout' are: 
+ * 
+ *   login --> loginWithRedirect -take to
+ *              auth0 login page-
+ * 
+ *   logout--> 
+ *     () => logout({returnTo:window.location.origin})
+ * 
 */
 const CartButtons = () => {
 
   const { closeSidebar } = useProductsContext()
   const { total_items } = useCartContext()
+  const { loginWithRedirect, myUser, logout } = useUserContext();
 
   //console.log('I received the closeSidebar on CartButtons ==>', closeSidebar)
   return(
@@ -36,9 +50,25 @@ const CartButtons = () => {
           </span>
         </span>
       </Link>
-      <button type='button' className='auth-btn'>
+      {/**implementing ternary operator i flip
+       * between 'login' and 'logout'*/}
+
+      {/**this line 'returnTo:window.location.origin' 
+       * comes directly from the Auth0 documentation
+       * in order to logout from the 'user'*/}
+      { myUser ? 
+      <button type='button' 
+        className='auth-btn' 
+        onClick={() => logout({returnTo:window.location.origin})}>
+        logout <FaUserMinus />
+      </button>
+      :
+      <button type='button' 
+        className='auth-btn' 
+        onClick={loginWithRedirect}>
         Login <FaUserPlus />
       </button>
+     }
     </Wrapper>
   )
 }
