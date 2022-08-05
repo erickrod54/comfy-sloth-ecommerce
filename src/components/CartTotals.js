@@ -3,30 +3,29 @@ import styled from 'styled-components'
 import { useCartContext } from '../context/cart_context'
 import { useUserContext } from '../context/user_context'
 import { formatPrice } from '../utils/helpers'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
-/**comfy-sloth-ecommerce app version 29 - CartTotals
+/**comfy-sloth-ecommerce app version 31 - CartTotals
  * Component - Features: 
  * 
- *      --> Building 'CartTotals' Component
+ *      --> Destructuring 'myUser' and 'loginWithRedirect'
+ *          from 'useUserContext()' 
  * 
- *      --> Destructuring 'total_amount' and 'shipping_fee' 
- *          from 'useCartContext()'
+ *      --> Conditionally rendering 'proceed checkout'
+ *          button or the 'login' button depending on 
+ *          if 'myUser' exists or not. 
  * 
- * Notes: the goal of this component is to render:
+ * Notes: 'loginWithRedirect' will handle 'myUser'
+ * login before the to checkout
  * 
- *    subtotal --> total_amount
- * 
- *    shipping fee --> shipping_fee
- * 
- *    order total --> total_amount + shipping_fee
- * 
- * all of these amounts formmated.
+ * pending to handle a redirect to checkout page after
+ * the 'myUser' login
 */
 
 const CartTotals = () => {
 
   const { total_amount, shipping_fee } = useCartContext();
+  const { myUser, loginWithRedirect } = useUserContext();
 
   return(
     <Wrapper> 
@@ -47,9 +46,15 @@ const CartTotals = () => {
               }</span>
           </h4>
         </article>
-        <Link to='/checkout' className='btn'>
-          proceed to checkout
-        </Link>
+        { myUser ? 
+            (
+            <Link to='/checkout' className='btn'>
+            proceed to checkout
+            </Link>
+            )
+        :
+        <button className='btn' onClick={loginWithRedirect}>login</button>
+        }
       </div>
     </Wrapper>
   )
