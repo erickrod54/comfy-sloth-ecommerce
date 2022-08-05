@@ -8,23 +8,23 @@ import CartButtons from './CartButtons'
 import { useProductsContext } from '../context/products_context'
 import { useUserContext } from '../context/user_context'
 
-/**comfy-sloth-ecommerce app version 2 - Navbar Component
+/**comfy-sloth-ecommerce app version 31 - Navbar Component
  * - Features: 
  * 
- *      --> Destructuring 'openSidebar' functionality from
- *          'useProductsContext()'.
+ *      --> Destructuring 'myUser' from 
+ *          'useUserContext()' 
  * 
- *      --> Triggering  'openSidebar' functionality on 
- *          clicking '<FaBars/>' link
+ *      --> Conditionally rendering checkout
+ *          link depending on if 'myUser'
+ *          exists or not. 
  * 
- * Notes: Placing the 'openSidebar' functionality here is 
- * now the Sidebar able to toggle - the isSidebarOpen state
- * value defined on the 'products_context' will toggle 
- * between true and false depending on the user actions-
-*/
+ * Notes: almost the same implementation will be made
+ * for 'Sidebar', and 'cartTotals' Components. */
+
 const Nav = () => {
 
   const { openSidebar } = useProductsContext()
+  const { myUser } = useUserContext();
 
   return(
     <NavContainer>
@@ -46,6 +46,14 @@ const Nav = () => {
                 </li>
               )
             })}
+          {/**here i conditionally render the checkout
+           * link*/}
+          {
+            myUser && (
+            <li>
+              <Link to='/checkout'>checkout</Link>
+            </li>
+            )}
           </ul>
           <CartButtons />
         </div>
