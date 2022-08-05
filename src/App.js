@@ -6,24 +6,18 @@ import { HomePage, Products, SingleProductPage, CartPage,
 CheckoutPage, ErrorPage, AboutPage, PrivateRoute} from './pages'
 import ProductsPage from './pages/ProductsPage';
 
-/**comfy-sloth-ecommerce app version 1 - pages/index js file
+/**comfy-sloth-ecommerce app version 31 - App js file
  * - Features: 
  * 
- *      --> Importing page Components
- *          form pages directory using an index file.
+ *      --> Implementing 'PrivateRoute' to 'Chekout' page.
  * 
- *      --> Building Routing for the different pages.
- * 
- * Notes: This approach makes look clean the code when i have 
- * to finally import these components in the destination file,
- * otherwise doing it by the usual way the header will be too
- * long and dificult to read.
+ * Notes: This implementation will be develop in 'PrivateRoute'
+ * in order to protect the checkout page from freely access.
 */
 
 function App() {
   return(
     <>
-      <h4>comfy sloth starter</h4>
       <Router>
         <Navbar />
         <Sidebar />
@@ -48,9 +42,9 @@ function App() {
             exact path='/products/:id' 
             children={<SingleProductPage />} />
 
-          <Route exact path='/checkout'>
+          <PrivateRoute exact path='/checkout'>
             <CheckoutPage />
-          </Route>
+          </PrivateRoute>
 
           <Route exact path='*'>
             <ErrorPage />
