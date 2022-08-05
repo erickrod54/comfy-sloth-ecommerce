@@ -8,25 +8,25 @@ import styled from 'styled-components'
 import CartButtons from './CartButtons'
 import { useUserContext } from '../context/user_context'
 
-/**comfy-sloth-ecommerce app version 2 - Sidebar Component
+/**comfy-sloth-ecommerce app version 31 - Sidebar Component
  * - Features: 
  * 
- *      --> Destructuring from 'useProductsContext()' 
- *          as props 'closeSidebar' functionality, 
- *          'isSidebarOpen' state value.
+ *      --> Destructuring 'myUser' from 
+ *         'useUserContext()'
+ *  
+ *      --> Conditionally rendering checkout
+ *          link depending on if 'myUser'
+ *          exists or not.
  * 
- *      --> Placing depending on 'isSidebarOpen' state 
- *          the 'closeSidebar' functionality on 'x' button
- *          , links mapped, and the 'checkout url'
- *          
+ * Notes: Almost the same implementation is made on the
+ * 'Nav' and 'CartTotals' Components.
  * 
- * Notes: Placing the 'closeSidebar' here define the behavior
- * to close the Sidebar from inside the sidebar.
 */
 
 const Sidebar = () => {
   
   const { closeSidebar, isSidebarOpen } = useProductsContext()
+  const { myUser } = useUserContext();
 
   //console.log('I received this from ProductsContext ==> ', isSidebarOpen)
 
@@ -64,14 +64,18 @@ const Sidebar = () => {
               })}
               {/**clicking on 'checkout' link will trigger
              * the 'closeSidebar'*/}
-               <li>
+
+             {/**here i conditionally render the Link */}
+             { myUser &&
+               (<li>
                     <Link 
                       to='/checkout' 
                       onClick={closeSidebar}>
                     checkout
                     </Link>
                   </li>
-            </ul>
+            )}
+          </ul>
             <CartButtons />
         </aside>
       </SidebarContainer>
