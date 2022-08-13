@@ -1,27 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
 
-/**comfy-sloth-ecommerce app version 31 - user_context js file
+/**comfy-sloth-ecommerce app version 32 - user_context js file
  * - Features: 
  * 
- *      --> Destructuring props from useAuth0() 
- *       -Auth0 object-
+ *      --> Triggering 'useEffect' on 'user'
+ *          value to set 'myUser' to user 
+ *         'value'
  * 
- *      --> Building state for 'myUser' to 
- *          flip the 'user' state -user come
- *          from Auth0-.
- * 
- *      --> Triggering 'useEffect' on 'isAuthenticated'
- *        value to set 'myUser'
- * 
- *      --> Providing data and features throught 
- *          the provider.
- * 
- * Notes: I destructure props from useAuth0() 
- * -Auth0 object previously placed to wrap
- * the whole application-
- * 
- *  
+ * Notes: the user value comes fro Auth0, i am checking with
+ * useAuth0 props in three places 'user_context', 'AuthWrapper',
+ * and 'PrivateRoute'
 */
 
 const UserContext = React.createContext()
@@ -31,8 +20,8 @@ export const UserProvider = ({ children }) => {
 
   /**here i destructure props from useAuth0() 
    * -Auth0 object-*/
-  const { isAuthenticated, loginWithRedirect, 
-          logout, user, isLoading } = useAuth0()
+  const { loginWithRedirect, 
+          logout, user } = useAuth0()
 
   /**here i build the state for the 'myUser' 
    * -this will be use to flip login and logout
@@ -40,15 +29,11 @@ export const UserProvider = ({ children }) => {
   const [ myUser, setMyUser ] = useState(null)
 
 
-  /**triggering 'useEffect' on 'isAuthenticated'
+  /**triggering 'useEffect' on 'user'
    * value to set 'myUser' to user 'value'*/
   useEffect(() => {
-    if (isAuthenticated) {
-      setMyUser(user)
-    }else{
-      setMyUser(false)
-    }
-  }, [isAuthenticated])
+    setMyUser(user)
+  }, [user])
 
   return (
     <UserContext.Provider value={{
