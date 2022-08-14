@@ -3,21 +3,27 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Navbar, Sidebar, Footer } from './components';
 
 import { HomePage, Products, SingleProductPage, CartPage, 
-CheckoutPage, ErrorPage, AboutPage, PrivateRoute} from './pages'
+CheckoutPage, ErrorPage, AboutPage, PrivateRoute, AuthWrapper} from './pages'
 import ProductsPage from './pages/ProductsPage';
 
-/**comfy-sloth-ecommerce app version 31 - App js file
+/**comfy-sloth-ecommerce app version 32 - App js file
  * - Features: 
  * 
- *      --> Implementing 'PrivateRoute' to 'Chekout' page.
+ *      --> Wrapping using 'AuthWrapper' the whole 
+ *          application.
  * 
- * Notes: This implementation will be develop in 'PrivateRoute'
- * in order to protect the checkout page from freely access.
+ * Notes: AuthWrappper and PrivateRoute will handle the 
+ * checkout page display - in previous version were redirecting
+ * to 'homepage' because it was checking our local user (
+ * reference to user_context )-
+ * 
 */
 
 function App() {
   return(
     <>
+    <AuthWrapper>
+
       <Router>
         <Navbar />
         <Sidebar />
@@ -52,6 +58,7 @@ function App() {
         </Switch>
         <Footer />
       </Router>
+    </AuthWrapper>
     
     </>
   )
