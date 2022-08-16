@@ -6,22 +6,11 @@ import Error from './Error'
 import Loading from './Loading'
 import Product from './Product'
 
-/**comfy-sloth-ecommerce app version 4 - FeaturedProducts 
+/**comfy-sloth-ecommerce app version 32 - FeaturedProducts 
  * Component - Features: 
  * 
- *      --> Building 'FeaturedProducts' Component.
- * 
- *      --> Destructuring 'products_loading', 
- *         'products_error':error, 'featured_products'.
- *          from 'useProductsContext()'
- *       
- *      --> Conditional rendering 'loading' and
- *          'error' previously destructured.
- * 
- *      --> Mapping and slicing 'featured' array
- *          to render 3 products.
- *    
- *      --> Styling the Component.            
+ *      --> Fixing 'Link' is defined but never used
+ *          warning by adding a Link  for all products.            
  * 
  * Notes: the slice method applied before mapping 
  * will render a 'slice' -part of the array- that 
@@ -53,6 +42,11 @@ const FeaturedProducts = () => {
           return <Product key={product.id} {...product}/>
         })}
       </div>
+      {/**here i add the link for all products
+       * with the className 'btn'*/}
+      <Link to='/products' className='btn'>
+        all products
+      </Link>
     </Wrapper>
   )
 }
