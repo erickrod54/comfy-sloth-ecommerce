@@ -1,26 +1,14 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-/**comfy-sloth-ecommerce app version 9 - ProductImages
+/**comfy-sloth-ecommerce app version 32 - ProductImages
  * file - Features: 
  * 
- *      --> Building a state to set the images
- *          when the user select them -onClick-.
- *               
- *      --> Destructuring images previously drilled
- *          from 'SingleProductPage' Component.
- * 
- *      --> Building the image gallery using a 
- *          'main.url' image and mapping the 
- *          the rest of 'main.url' images.
+ *      --> Fixing warning related to the 'ProductsImages'
+ *          'alt'. 
  * 
  * 
- * Notes: The 'images' and the 'url' are 'undefined'
- * values at the beggining that's why i set initial
- * values where a destructured and drilled.
- * 
- * The classes use to give style to the gallery are
- * 'main', 'active'
+ * Notes: By this version i'm fixing warnings
 */
 
 /**here i set the initial values */
@@ -37,9 +25,8 @@ const ProductImages = ({ images = [{url:''}] }) => {
     <Wrapper>
       {/**here is the full galery */}
 
-      {/**here is the main 'image' -the active class is to apply a 
-       * style to the image that has been selected by the user-*/}
-      <img src={main.url} alt='main imagen' className='main'/>
+      {/**here i change it alt to 'main' */}
+      <img src={main.url} alt='main' className='main'/>
 
       {/**here i map the rest of 'images' */}
       <div className='gallery'>
