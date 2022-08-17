@@ -6,10 +6,13 @@ import {
   TOGGLE_CART_ITEM_AMOUNT,
 } from '../actions'
 
-/**comfy-sloth-ecommerce app version 31 - cart_context
+/**comfy-sloth-ecommerce app version 32 - cart_context
  * file - Features: 
  * 
- *      --> Building the 'COUNT_CART_TOTALS' action.
+ *      --> Fixing ADD_TO_CART warning.
+ * 
+ *      --> Fixing cart_reducer warning by returning 
+ *          the item.
  * 
  * Notes: Using reduce over the 'cart' state i'll 
  * calculate the 'total_items' and the 
@@ -17,7 +20,7 @@ import {
  */
 
 const cart_reducer = (state, action) => {
-  if (action.type === 'ADD_TO_CART') {
+  if (action.type === ADD_TO_CART) {
     const { id, color, amount, product } = action.payload;
     
     /**this is to check that the item exits already in 
@@ -110,9 +113,9 @@ const cart_reducer = (state, action) => {
           /**i spread the 'item', update the 'amount' */ 
           return { ...item, amount: newAmount }
         }
-      }else{
-        return item;
       }
+      /**here i return the item to fix 'cart_reducer' warning */
+      return item
     })
     /**i spread the state and the cart value will
      * be 'tempCart'*/
