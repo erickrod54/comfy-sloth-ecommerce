@@ -3,17 +3,13 @@ import styled from 'styled-components'
 import { useCartContext } from '../context/cart_context'
 import { useUserContext } from '../context/user_context'
 import { formatPrice } from '../utils/helpers'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-/**comfy-sloth-ecommerce app version 31 - CartTotals
+/**comfy-sloth-ecommerce app version 32 - CartTotals
  * Component - Features: 
  * 
- *      --> Destructuring 'myUser' and 'loginWithRedirect'
- *          from 'useUserContext()' 
- * 
- *      --> Conditionally rendering 'proceed checkout'
- *          button or the 'login' button depending on 
- *          if 'myUser' exists or not. 
+ *      -->  Fixing Redirect warning by removing it
+ *          from the imports.
  * 
  * Notes: 'loginWithRedirect' will handle 'myUser'
  * login before the to checkout
