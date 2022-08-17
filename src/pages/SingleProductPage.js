@@ -14,14 +14,17 @@ import {
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-/**comfy-sloth-ecommerce app version 10 - SingleProductPage 
+/**comfy-sloth-ecommerce app version 32 - SingleProductPage 
  * file - Features: 
  * 
- *      --> Drilling props 'product' throught the 
- *         'AddToCart' Component.               
+ *      --> Fixing SingleProductPage warning related with 
+ *          'missing dependency on fetchSingleProduct'. 
  * 
- * Notes: The Components placed here are going 
- * to be use to build this page
+ *      --> Fixing SingleProductPage warning related with 
+ *          'history'.               
+ * 
+ * Notes: By adding // eslint-disable-next-line i fix
+ * the warning
 */
 
 const SingleProductPage = () => {
@@ -42,6 +45,7 @@ const SingleProductPage = () => {
 /**here i build the url */         
   useEffect(() => {
     fetchSingleProduct(`${url}${id}`)
+    // eslint-disable-next-line
   },[id])
 
   /**here i build the timer */
@@ -51,6 +55,7 @@ const SingleProductPage = () => {
         history.push('/')
       }, 3000)
     }
+    // eslint-disable-next-line
   }, [error])
 
   if (loading) {
