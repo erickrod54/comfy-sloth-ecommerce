@@ -2,15 +2,15 @@ import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Navbar, Sidebar, Footer } from './components';
 
-import { HomePage, Products, SingleProductPage, CartPage, 
+import { HomePage, SingleProductPage, CartPage, 
 CheckoutPage, ErrorPage, AboutPage, PrivateRoute, AuthWrapper} from './pages'
 import ProductsPage from './pages/ProductsPage';
 
-/**comfy-sloth-ecommerce app version 32 - App js file
+/**comfy-sloth-ecommerce app version 33 - App js file
  * - Features: 
  * 
- *      --> Wrapping using 'AuthWrapper' the whole 
- *          application.
+ *      --> Fixing the 'Products' warning by removing it 
+ *          of the imports.
  * 
  * Notes: AuthWrappper and PrivateRoute will handle the 
  * checkout page display - in previous version were redirecting
