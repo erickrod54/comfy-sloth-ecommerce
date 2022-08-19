@@ -6,18 +6,14 @@ import { useProductsContext } from '../context/products_context'
 import { useCartContext } from '../context/cart_context'
 import { useUserContext } from '../context/user_context'
 
-/**comfy-sloth-ecommerce app version 31 - CartButtons 
+/**comfy-sloth-ecommerce app version 33 - CartButtons 
  * Component - Features: 
  * 
- *      --> Destructuring loginWithRedirect, myUser, 
- *          logout from 'useUserContext()'
- *    
- *      --> Building 'login' feature.
- *  
- *      --> Building 'logout' feature.
+ *      --> Destructuring 'clearCart' feature
+ *          from 'useCartContext' 
  * 
- *      --> Flipping between 'login' and
- *          'logout' feature.
+ *      --> Setting the clearCart() to clean
+ *          the cart when the user logout.
  * 
  * Notes: the specific code and method for 'login' and
  * 'logout' are: 
@@ -32,7 +28,8 @@ import { useUserContext } from '../context/user_context'
 const CartButtons = () => {
 
   const { closeSidebar } = useProductsContext()
-  const { total_items } = useCartContext()
+  /**here i destructure 'clearCart' */
+  const { total_items, clearCart } = useCartContext()
   const { loginWithRedirect, myUser, logout } = useUserContext();
 
   //console.log('I received the closeSidebar on CartButtons ==>', closeSidebar)
@@ -56,10 +53,16 @@ const CartButtons = () => {
       {/**this line 'returnTo:window.location.origin' 
        * comes directly from the Auth0 documentation
        * in order to logout from the 'user'*/}
+
+       {/**i set it up as a function and include
+        * the clearCart() feature */}
       { myUser ? 
       <button type='button' 
         className='auth-btn' 
-        onClick={() => logout({returnTo:window.location.origin})}>
+        onClick={() => {
+          clearCart()
+          logout({returnTo:window.location.origin})} 
+        }>
         logout <FaUserMinus />
       </button>
       :
