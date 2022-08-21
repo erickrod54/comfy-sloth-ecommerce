@@ -13,38 +13,18 @@ import { useUserContext } from '../context/user_context'
 import { formatPrice } from '../utils/helpers'
 import { useHistory } from 'react-router-dom'
 
-/**comfy-sloth-ecommerce app version 33 - StripeCheckout
+/**comfy-sloth-ecommerce app version 34 - StripeCheckout
  * file - Features: 
  * 
- *      --> Building a promise with the .env variable.
+ *      --> Building the 'CardElement' return
  * 
- *      --> Placing 'Elements' Component to provide
- *          the promise.
+ * Notes: By this version is not being set up
+ * payment logic, i've only set styles for the
+ * 'CardElement'
  * 
- *      --> Building 'CheckoutForm' Component.
- * 
- *      --> Destructuring 'cart', 'total_amount',
- *         'shipping_fee', 'clearCart' props from
- *          'useCartContext()' 
- * 
- *      --> Destructuring 'myUser' from 
- *         'useUserContext()'
- * 
- * Notes: By this version i implement:
- *     
- *      --> Elements -to provide a promise with the 
- *          public key-
- * 
- *      --> useStripe
- * 
- * from ==> @stripe/react-stripe-js
- * 
- * i also previously created the keys - stripe docs
- * reference -.
- * 
- * and i tested it out:
- * 
- *  console.log(process.env)
+ * handleChange and handleSubmit are part of the
+ * functionality that will be set in nexts 
+ * versions
 */
 
 
@@ -98,7 +78,55 @@ const CheckoutForm = () => {
     },
   };
 
-  return <h4>hello from Stripe Checkout </h4>
+  const createPaymentIntent = async() => {
+    console.log('hello from stripe checkout')
+  }
+
+  useEffect(() => {
+    createPaymentIntent()
+    // eslint-disable-next-line 
+  }, [])
+  
+  const handleChange = async (event) => {}
+  const handleSubmit = async (ev) => {}
+  
+  return(
+    <div>
+      {/**the 'id' names comes from Stripe docs*/}
+
+      {/**also the styles applied come from 'form' 
+       * in the Style Class Component*/}
+      <form id='payment-form' onSubmit={handleSubmit}>
+        <CardElement 
+          id="car-element" 
+          options={cardStyle} 
+          onChange={handleChange}
+          />
+
+          <button disabled={processing || disabled || succeded } id='submit'>
+            <span id="button-text">
+              {processing ? <div className='spinner' id='spinner'/> : 'Pay'}
+            </span>
+          </button>
+          {/**Show any error that happens when processing 
+           * the payment */}
+           {error && (
+            <div className='card-error' role='alert'>
+              {error}
+            </div>
+           )}
+           {/** Show a sucess message upon completition */}
+           <p className={ succeded ? 
+            'result-message' : 'result-message hidden'}>
+              Payment succeded, see the result in your
+              <a href={`https://dashboard.stripe.com/test/payments`}>
+                Stripe Dashboard
+              </a>
+              Refresh the page again
+            </p>
+      </form>
+    </div>
+  )
 }
 
 const StripeCheckout = () => {
@@ -112,6 +140,7 @@ const StripeCheckout = () => {
 }
 
 const Wrapper = styled.section`
+/**these styles come from stripe documentation */
   form {
     width: 30vw;
     align-self: center;
