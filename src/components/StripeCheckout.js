@@ -13,18 +13,17 @@ import { useUserContext } from '../context/user_context'
 import { formatPrice } from '../utils/helpers'
 import { useHistory } from 'react-router-dom'
 
-/**comfy-sloth-ecommerce app version 34 - StripeCheckout
+/**comfy-sloth-ecommerce app version 35 - StripeCheckout
  * file - Features: 
  * 
- *      --> Building the 'CardElement' return
+ *      --> Building the 'createPaymentIntent'
  * 
- * Notes: By this version is not being set up
- * payment logic, i've only set styles for the
- * 'CardElement'
- * 
- * handleChange and handleSubmit are part of the
- * functionality that will be set in nexts 
- * versions
+ * Notes: By this version i start to work in the
+ * payment logic, i use the 'createPaymentIntent'
+ * to get the data from the 'cart', 'shipping_fee', 
+ * 'total_amount' and post it -send it- to the 
+ * serveless function -netlify- in order to later
+ * test this last one with Stripe
 */
 
 
@@ -79,7 +78,13 @@ const CheckoutForm = () => {
   };
 
   const createPaymentIntent = async() => {
-    console.log('hello from stripe checkout')
+    try {
+      const data = await axios.post('/.netlify/functions/create-payment-intent',
+      JSON.stringify({ cart, shipping_fee, total_amount})
+      )
+    } catch (error) {
+      
+    }
   }
 
   useEffect(() => {
