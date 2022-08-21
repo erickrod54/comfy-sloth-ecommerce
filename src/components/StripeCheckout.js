@@ -13,14 +13,100 @@ import { useUserContext } from '../context/user_context'
 import { formatPrice } from '../utils/helpers'
 import { useHistory } from 'react-router-dom'
 
+/**comfy-sloth-ecommerce app version 33 - StripeCheckout
+ * file - Features: 
+ * 
+ *      --> Building a promise with the .env variable.
+ * 
+ *      --> Placing 'Elements' Component to provide
+ *          the promise.
+ * 
+ *      --> Building 'CheckoutForm' Component.
+ * 
+ *      --> Destructuring 'cart', 'total_amount',
+ *         'shipping_fee', 'clearCart' props from
+ *          'useCartContext()' 
+ * 
+ *      --> Destructuring 'myUser' from 
+ *         'useUserContext()'
+ * 
+ * Notes: By this version i implement:
+ *     
+ *      --> Elements -to provide a promise with the 
+ *          public key-
+ * 
+ *      --> useStripe
+ * 
+ * from ==> @stripe/react-stripe-js
+ * 
+ * i also previously created the keys - stripe docs
+ * reference -.
+ * 
+ * and i tested it out:
+ * 
+ *  console.log(process.env)
+*/
+
+
+const promise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC)
+
 const CheckoutForm = () => {
+
+  /**here i destructure props from the
+   * 'useCartContext()' */
+  const { cart,
+         total_amount,
+         shipping_fee,
+         clearCart } = useCartContext()
+
+  /**Here i destructure myUser */       
+  const { myUser } = useUserContext()
+
+  /**i get the 'history' from 'react-router-dom'
+   *(i will use it later -to take out from payment 
+   * once is done-)*/
+  const history = useHistory()
+
+  //All this states will handle stripe payments
+  //not active - only test porpouse
+  const [ succeded, setSucceded ] = useState(false);
+  const [ error, setError ] = useState(null);
+  const [ processing, setsProcessing ] = useState('');
+  const [ disabled, setsDisabled ] = useState(true);
+  const [ clientSecret, setClientSecret ] = useState('')
+  
+  /**this are directly from stripe */
+  const stripe = useStripe();
+  const elements = useElements();
+
+  /**these are the styles for 'cardStyle' */
+  const cardStyle = {
+    style: {
+      base: {
+        color: '#32325d',
+        fontFamily: 'Arial, sans-serif',
+        fontSmoothing: 'antialiased',
+        fontSize: '16px',
+        '::placeholder': {
+          color: '#32325d',
+        },
+      },
+      invalid: {
+        color: '#fa755a',
+        iconColor: '#fa755a',
+      },
+    },
+  };
+
   return <h4>hello from Stripe Checkout </h4>
 }
 
 const StripeCheckout = () => {
   return (
     <Wrapper>
-      <CheckoutForm />
+      <Elements stripe={promise}>
+        <CheckoutForm />
+      </Elements>
     </Wrapper>
   )
 }
