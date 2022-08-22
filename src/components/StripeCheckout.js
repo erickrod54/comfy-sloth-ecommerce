@@ -13,10 +13,11 @@ import { useUserContext } from '../context/user_context'
 import { formatPrice } from '../utils/helpers'
 import { useHistory } from 'react-router-dom'
 
-/**comfy-sloth-ecommerce app version 35 - StripeCheckout
+/**comfy-sloth-ecommerce app version 37 - StripeCheckout
  * file - Features: 
  * 
- *      --> Building the 'createPaymentIntent'
+ *      --> Testing the createPaymentIntent
+ *          logging it out the data.
  * 
  * Notes: By this version i start to work in the
  * payment logic, i use the 'createPaymentIntent'
@@ -24,6 +25,13 @@ import { useHistory } from 'react-router-dom'
  * 'total_amount' and post it -send it- to the 
  * serveless function -netlify- in order to later
  * test this last one with Stripe
+ * 
+ * once i get to the checkout link, i'll get the
+ * object data with the secret key, so next steps
+ * are work in the:
+ * 
+ *     --> handleChange 
+ *     --> handleSubmit  
 */
 
 
@@ -82,8 +90,11 @@ const CheckoutForm = () => {
       const data = await axios.post('/.netlify/functions/create-payment-intent',
       JSON.stringify({ cart, shipping_fee, total_amount})
       )
+      /**i log the 'data' to test im receiving it*/
+      //console.log(data)
+      setClientSecret(data.clientSecret)
     } catch (error) {
-      
+      console.log(error.response)
     }
   }
 
