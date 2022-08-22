@@ -13,11 +13,11 @@ import { useUserContext } from '../context/user_context'
 import { formatPrice } from '../utils/helpers'
 import { useHistory } from 'react-router-dom'
 
-/**comfy-sloth-ecommerce app version 37 - StripeCheckout
+/**comfy-sloth-ecommerce app version 38 - StripeCheckout
  * file - Features: 
  * 
- *      --> Testing the createPaymentIntent
- *          logging it out the data.
+ *      --> Displaying a message depending on the
+ *          succeded value with the order details.
  * 
  * Notes: By this version i start to work in the
  * payment logic, i use the 'createPaymentIntent'
@@ -108,6 +108,20 @@ const CheckoutForm = () => {
   
   return(
     <div>
+      {
+        succeded ?
+       <article>
+          <h4>Thank you</h4>
+          <h4>Your payment was successful!</h4>
+          <h4>Redirecting to home page short</h4>
+       </article> 
+       :
+       <article>
+        <h4>Hello, {myUser && myUser.name}</h4>
+        <p>Your total is {formatPrice(shipping_fee + total_amount)}</p>
+        <p>Test Card Number: 4242 4242 4242 4242</p>
+       </article>
+      }
       {/**the 'id' names comes from Stripe docs*/}
 
       {/**also the styles applied come from 'form' 
