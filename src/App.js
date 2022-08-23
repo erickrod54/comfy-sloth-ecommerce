@@ -1,16 +1,15 @@
 import React from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Navbar, Sidebar, Footer } from './components';
 
 import { HomePage, SingleProductPage, CartPage, 
 CheckoutPage, ErrorPage, AboutPage, PrivateRoute, AuthWrapper} from './pages'
 import ProductsPage from './pages/ProductsPage';
 
-/**comfy-sloth-ecommerce app version 33 - App js file
+/**comfy-sloth-ecommerce app version 39 - App js file
  * - Features: 
  * 
- *      --> Fixing the 'Products' warning by removing it 
- *          of the imports.
+ *      --> Updating to react-router-v6
  * 
  * Notes: AuthWrappper and PrivateRoute will handle the 
  * checkout page display - in previous version were redirecting
@@ -27,35 +26,23 @@ function App() {
       <Router>
         <Navbar />
         <Sidebar />
-        <Switch>
-          <Route exact path='/'>
-            <HomePage />
-          </Route>
-
-          <Route exact path='/about'>
-            <AboutPage />
-          </Route>
-
-          <Route exact path='/cart'>
-            <CartPage />
-          </Route>
-
-          <Route exact path='/products'>
-            <ProductsPage />
-          </Route>
-
-          <Route 
-            exact path='/products/:id' 
-            children={<SingleProductPage />} />
-
-          <PrivateRoute exact path='/checkout'>
-            <CheckoutPage />
-          </PrivateRoute>
-
-          <Route exact path='*'>
-            <ErrorPage />
-          </Route>
-        </Switch>
+        <Routes>
+          <Route path='/' element={<HomePage />}/>
+          <Route path='/about' element={<AboutPage />}/>
+          <Route path='/cart' element={<CartPage />}/>
+          <Route path='/products' element={<ProductsPage />}/>
+          <Route path='/products/:id' element={<SingleProductPage />}/>
+          <Route path='/checkout' element={<HomePage />}/>
+          
+          {/**this way i implement privateRoute in react
+           * router version 6*/}
+          <Route path='/' element={
+            <PrivateRoute>
+              <CheckoutPage />
+            </PrivateRoute>
+          }/>
+          <Route path='*' element={<ErrorPage />}/>
+        </Routes>
         <Footer />
       </Router>
     </AuthWrapper>
