@@ -1,34 +1,30 @@
 import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 
-/**comfy-sloth-ecommerce app version 32 - PrivateRoute
+/**comfy-sloth-ecommerce app version 39 - PrivateRoute
  * Page - Features: 
  * 
- *      --> Destructuring 'user' from 
- *         'useAuth0()' .
+ *      --> Taking off the '..rest'
  * 
- *      --> Setting 'user' to render 'children' or
- *          'homePage'
+ *      --> Depending of the 'user' it
+ *          will 'Navigate' to the 
+ *         'HomePage' 
  * 
- * Notes: Also i have to make changes to private route
- * in order to check directly to 'useAuth0' user props
- * and display the children - that will be checkout page-
+ * Notes: the taking off the '..rest' is because
+ * the checkout will be directly children of this
+ * route component
  * 
 */
 
-const PrivateRoute = ({ children, ...rest }) => {
+const PrivateRoute = ({ children }) => {
   
   const { user } = useAuth0()
 
-  /**here i can test it */
-  //console.log('the children are ==>',children)
-  //console.log('the rest is ==>', rest)
-  
-  return(
-    <Route {...rest} render={() => { 
-      return user ? children : <Redirect to='/'></Redirect>
-    }}></Route>
-  )
-};
+  if (!user) {
+    return <Navigate to='/'/>
+  }
+  return children;
+}
+
 export default PrivateRoute;
