@@ -13,25 +13,24 @@ import { useUserContext } from '../context/user_context'
 import { formatPrice } from '../utils/helpers'
 import { useHistory } from 'react-router-dom'
 
-/**comfy-sloth-ecommerce app version 38 - StripeCheckout
+/**comfy-sloth-ecommerce app version 39 - StripeCheckout
  * file - Features: 
  * 
- *      --> Displaying a message depending on the
- *          succeded value with the order details.
+ *      --> Building 'handleChange' feature.
  * 
- * Notes: By this version i start to work in the
- * payment logic, i use the 'createPaymentIntent'
- * to get the data from the 'cart', 'shipping_fee', 
- * 'total_amount' and post it -send it- to the 
- * serveless function -netlify- in order to later
- * test this last one with Stripe
+ *      --> Building 'handleSubmit' feature.
  * 
- * once i get to the checkout link, i'll get the
- * object data with the secret key, so next steps
- * are work in the:
+ *      --> Fixing 'data' to get access to the key.
  * 
- *     --> handleChange 
- *     --> handleSubmit  
+ *      --> Testing a payment successfully.
+ * 
+ * Notes: 'handleChange' and 'handleSubmit' mostly use
+ * methods by stripe documentation and states that i 
+ * build here under the comment 'All this states will 
+ * handle stripe payments'
+ *   
+ * In the 'createPaymentIntent' i have to pull the
+ * 'data' to get access to the key.
 */
 
 
@@ -58,8 +57,8 @@ const CheckoutForm = () => {
   //not active - only test porpouse
   const [ succeded, setSucceded ] = useState(false);
   const [ error, setError ] = useState(null);
-  const [ processing, setsProcessing ] = useState('');
-  const [ disabled, setsDisabled ] = useState(true);
+  const [ processing, setProcessing ] = useState('');
+  const [ disabled, setDisabled ] = useState(true);
   const [ clientSecret, setClientSecret ] = useState('')
   
   /**this are directly from stripe */
@@ -87,11 +86,17 @@ const CheckoutForm = () => {
 
   const createPaymentIntent = async() => {
     try {
-      const data = await axios.post('/.netlify/functions/create-payment-intent',
+      /**i have to pull out the 'data' object from axios
+       * in order to access to the key*/
+      const { data } = await axios.post('/.netlify/functions/create-payment-intent',
       JSON.stringify({ cart, shipping_fee, total_amount})
       )
       /**i log the 'data' to test im receiving it*/
-      //console.log(data)
+
+      /**and now i can access the key and make the pay
+       * effective - checking in the stripe 
+       * dashboard > payments*/
+      //console.log(data.clientSecret)
       setClientSecret(data.clientSecret)
     } catch (error) {
       console.log(error.response)
@@ -103,8 +108,33 @@ const CheckoutForm = () => {
     // eslint-disable-next-line 
   }, [])
   
-  const handleChange = async (event) => {}
-  const handleSubmit = async (ev) => {}
+  /**here i build 'handleChange' */
+  const handleChange = async (event) => {
+    setDisabled(event.empty)
+    setError(event.error ? event.error.message : '')
+  }
+
+  /**here i build 'handleSubmit' */
+  const handleSubmit = async (ev) => {
+    ev.preventDefault()
+    setProcessing(true);
+    const payload = await stripe.confirmCardPayment(clientSecret, {
+      payment_method:{
+        card:elements.getElement(CardElement)
+      }
+    })
+    if (payload.error) {
+      setError(`Payment fail ${payload.error.message}`)
+    }else{
+      setError(null);
+      setProcessing(false)
+      setSucceded(true)
+      setTimeout(() => {
+        clearCart()
+         history.push('/')
+      }, 10000)
+    }
+  }
   
   return(
     <div>
@@ -113,7 +143,7 @@ const CheckoutForm = () => {
        <article>
           <h4>Thank you</h4>
           <h4>Your payment was successful!</h4>
-          <h4>Redirecting to home page short</h4>
+          <h4>Redirecting to home page shortly</h4>
        </article> 
        :
        <article>
