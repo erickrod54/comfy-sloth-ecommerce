@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useProductsContext } from '../context/products_context'
 import { single_product_url as url } from '../utils/constants'
 import { formatPrice } from '../utils/helpers'
@@ -14,24 +14,24 @@ import {
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-/**comfy-sloth-ecommerce app version 32 - SingleProductPage 
+/**comfy-sloth-ecommerce app version 39 - SingleProductPage 
  * file - Features: 
  * 
- *      --> Fixing SingleProductPage warning related with 
- *          'missing dependency on fetchSingleProduct'. 
+ *      --> Importing and Placing 'useNavigate'.
  * 
- *      --> Fixing SingleProductPage warning related with 
- *          'history'.               
+ *      --> Replacing 'history.push' for 
+ *          'navigate'.                
  * 
- * Notes: By adding // eslint-disable-next-line i fix
- * the warning
+ * Notes: navigate is use to redirecting in react
+ * router v6
 */
 
 const SingleProductPage = () => {
 
   const { id } = useParams()
 
-  const history = useHistory()
+  /**here i change 'history' for 'useNavigate' */
+  const navigate = useNavigate()
 
   /**here i destructure 'props' and 'fucntionality'
    * giving them nice friendly alliases*/
@@ -52,7 +52,8 @@ const SingleProductPage = () => {
   useEffect(() => {
     if (error) {
       setTimeout(() => {
-        history.push('/')
+        /**here i change 'history.push' for 'navigate' */
+        navigate('/')
       }, 3000)
     }
     // eslint-disable-next-line
