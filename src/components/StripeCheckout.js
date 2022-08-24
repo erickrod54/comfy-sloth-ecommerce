@@ -11,26 +11,18 @@ import axios from 'axios'
 import { useCartContext } from '../context/cart_context'
 import { useUserContext } from '../context/user_context'
 import { formatPrice } from '../utils/helpers'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-/**comfy-sloth-ecommerce app version 39 - StripeCheckout
+/**comfy-sloth-ecommerce app version 40 - StripeCheckout
  * file - Features: 
  * 
- *      --> Building 'handleChange' feature.
+ *      --> Importing and Placing 'useNavigate' hook.
  * 
- *      --> Building 'handleSubmit' feature.
+ *      --> Implementing 'navigate' to take the user
+ *          to homePage once the payment is done.
  * 
- *      --> Fixing 'data' to get access to the key.
- * 
- *      --> Testing a payment successfully.
- * 
- * Notes: 'handleChange' and 'handleSubmit' mostly use
- * methods by stripe documentation and states that i 
- * build here under the comment 'All this states will 
- * handle stripe payments'
- *   
- * In the 'createPaymentIntent' i have to pull the
- * 'data' to get access to the key.
+ * Notes: By this version the app is update to react
+ * router version 6.
 */
 
 
@@ -48,10 +40,9 @@ const CheckoutForm = () => {
   /**Here i destructure myUser */       
   const { myUser } = useUserContext()
 
-  /**i get the 'history' from 'react-router-dom'
-   *(i will use it later -to take out from payment 
-   * once is done-)*/
-  const history = useHistory()
+  /**here i replace 'history' for 'navigate' 
+   * -to take out from payment once is done-)*/
+  const navigate = useNavigate()
 
   //All this states will handle stripe payments
   //not active - only test porpouse
@@ -131,8 +122,9 @@ const CheckoutForm = () => {
       setSucceded(true)
       setTimeout(() => {
         clearCart()
-         history.push('/')
-      }, 10000)
+        /**here i implement 'navigate'*/
+         navigate('/')
+      }, 1000)
     }
   }
   
